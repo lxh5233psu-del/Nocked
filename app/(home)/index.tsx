@@ -51,7 +51,7 @@ const MODULES: ModuleConfig[] = [
     label: 'Form',
     description: '8 components',
     icon: <Target size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/(home)',
+    route: '/form',
   },
   {
     id: 'Tune',

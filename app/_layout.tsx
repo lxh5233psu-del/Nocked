@@ -48,6 +48,7 @@ export default function RootLayout() {
         <Stack.Screen name="onboarding" />
         <Stack.Screen name="(home)" />
         <Stack.Screen name="setup" />
+        <Stack.Screen name="form" />
       </Stack>
     </GestureHandlerRootView>
   );
