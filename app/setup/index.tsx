@@ -25,12 +25,12 @@ const SETUP_STEPS = [
   { num: 4, title: 'Nocking Point / D-Loop', route: '/setup/step-4' },
   { num: 5, title: 'Centershot / Rest Position', route: '/setup/step-5' },
   { num: 6, title: 'Draw Weight', route: '/setup/step-6' },
-  { num: 7, title: 'Coarse Draw Length Adjustment', route: null },
-  { num: 8, title: 'Sight Installation & Axis Setup', route: null },
-  { num: 9, title: 'Peep Sight Alignment', route: null },
-  { num: 10, title: 'Drop-Away Rest Timing', route: null },
-  { num: 11, title: 'Stabilizer Installation', route: null },
-  { num: 12, title: 'First Axis Adjustment', route: null },
+  { num: 7, title: 'Coarse Draw Length Adjustment', route: '/setup/step-7' },
+  { num: 8, title: 'Sight Installation & Axis Setup', route: '/setup/step-8' },
+  { num: 9, title: 'Peep Sight Alignment', route: '/setup/step-9' },
+  { num: 10, title: 'Drop-Away Rest Timing', route: '/setup/step-10' },
+  { num: 11, title: 'Stabilizer Installation', route: '/setup/step-11' },
+  { num: 12, title: 'First Axis Adjustment', route: '/setup/step-12' },
 ];
 
 export default function SetupHubScreen() {
@@ -87,6 +87,16 @@ export default function SetupHubScreen() {
             {completedSteps.length} of 12 steps complete
           </Text>
         </View>
+
+        {/* Setup complete banner */}
+        {activeBow?.setupComplete && (
+          <View style={styles.completeBanner}>
+            <Text style={styles.completeBannerTitle}>Setup Complete</Text>
+            <Text style={styles.completeBannerText}>
+              All 12 steps finished. Head to the Tuning Phase to sight in and refine your setup.
+            </Text>
+          </View>
+        )}
 
         {/* Step list */}
         {SETUP_STEPS.map((step) => {
@@ -253,5 +263,23 @@ const styles = StyleSheet.create({
     fontSize: 8,
     color: Colors.greyLight,
     marginTop: 2,
+  },
+  completeBanner: {
+    backgroundColor: Colors.clayDarkest,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+    marginBottom: Spacing.lg,
+  },
+  completeBannerTitle: {
+    ...Typography.labelMedium,
+    fontSize: FontSizes.sm,
+    color: Colors.bgPrimary,
+    marginBottom: Spacing.xs,
+  },
+  completeBannerText: {
+    ...Typography.body,
+    fontSize: FontSizes.sm,
+    color: Colors.bgSecondary,
+    lineHeight: 18,
   },
 });

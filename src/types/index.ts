@@ -132,7 +132,29 @@ export interface BowSetupData {
   limbBoltTurnsFromMax?: number;
   estimatedDrawWeight?: number;
 
-  // Step 7+: reserved for Sprint 3
+  // Step 7: Coarse Draw Length
+  wingspan?: number;
+  calculatedDrawLength?: number;
+  modulePosition?: string;
+
+  // Step 8: Sight Installation & Axis
+  sightMounted?: boolean;
+  secondAxisSet?: boolean;
+  thirdAxisRoughSet?: boolean;
+
+  // Step 9: Peep Sight
+  peepInserted?: boolean;
+  peepTemporaryTied?: boolean;
+
+  // Step 10: Drop-Away Rest Timing
+  restTimingVerified?: boolean;
+
+  // Step 11: Stabilizer
+  stabilizerInstalled?: boolean;
+  roughBalanceAchieved?: boolean;
+
+  // Step 12: First Axis
+  firstAxisSet?: boolean;
 }
 
 // ─── Arrow Profile ────────────────────────────────────────────────────────────
