@@ -12,6 +12,7 @@ import {
   SessionSummary,
   ModuleType,
   ScoringRound,
+  ShotSession,
 } from '@/types';
 
 // ─── State Shape ──────────────────────────────────────────────────────────────
@@ -39,6 +40,10 @@ interface AppState {
   // Scoring
   scoringRounds: ScoringRound[];
   activeScoringRoundId: string | null;
+
+  // Shot Analyzer
+  shotSessions: ShotSession[];
+  activeSessionId: string | null;
 
   // Session tracking
   lastSession: SessionSummary | null;
@@ -87,6 +92,12 @@ interface AppActions {
   deleteScoringRound: (id: string) => void;
   setActiveScoringRound: (id: string | null) => void;
 
+  // Shot Analyzer
+  addShotSession: (session: ShotSession) => void;
+  updateShotSession: (id: string, updates: Partial<ShotSession>) => void;
+  deleteShotSession: (id: string) => void;
+  setActiveSession: (id: string | null) => void;
+
   // Session
   setLastSession: (session: SessionSummary) => void;
 
@@ -110,6 +121,8 @@ const initialState: AppState = {
   releaseProfile: null,
   scoringRounds: [],
   activeScoringRoundId: null,
+  shotSessions: [],
+  activeSessionId: null,
   lastSession: null,
   formRemindersEnabled: true,
   formReminderFrequency: 'every session',
@@ -250,6 +263,29 @@ export const useAppStore = create<AppState & AppActions>()(
         })),
 
       setActiveScoringRound: (id) => set({ activeScoringRoundId: id }),
+
+      // ── Shot Analyzer ────────────────────────────────────────────────────────
+      addShotSession: (session) =>
+        set((state) => ({
+          shotSessions: [session, ...state.shotSessions],
+          activeSessionId: session.id,
+        })),
+
+      updateShotSession: (id, updates) =>
+        set((state) => ({
+          shotSessions: state.shotSessions.map((s) =>
+            s.id === id ? { ...s, ...updates } : s
+          ),
+        })),
+
+      deleteShotSession: (id) =>
+        set((state) => ({
+          shotSessions: state.shotSessions.filter((s) => s.id !== id),
+          activeSessionId:
+            state.activeSessionId === id ? null : state.activeSessionId,
+        })),
+
+      setActiveSession: (id) => set({ activeSessionId: id }),
 
       // ── Session ─────────────────────────────────────────────────────────────
       setLastSession: (session) => set({ lastSession: session }),

@@ -229,6 +229,36 @@ export interface ScoringRound {
   notes?: string;
 }
 
+// ─── Shot Analyzer Types ──────────────────────────────────────────────────────
+
+export type GroupSize = 'tight' | 'medium' | 'scattered';
+export type WindCondition = 'calm' | 'light' | 'moderate' | 'strong';
+export type LightCondition = 'bright' | 'overcast' | 'low-light' | 'indoor';
+
+export interface ShotEnd {
+  endNumber: number;
+  arrowCount: number;
+  distance: number;
+  groupSize?: GroupSize;
+  formIssues: string[];
+  notes?: string;
+}
+
+export interface ShotSession {
+  id: string;
+  date: number;
+  bowId?: string;
+  location?: string;
+  goal?: string;
+  wind?: WindCondition;
+  light?: LightCondition;
+  ends: ShotEnd[];
+  totalArrows: number;
+  sessionNotes?: string;
+  formFocus: string[];
+  completed: boolean;
+}
+
 // ─── Bow Database Types ───────────────────────────────────────────────────────
 
 export type CamType = 'Single' | 'Binary' | 'Hybrid' | 'Solo';

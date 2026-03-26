@@ -70,9 +70,9 @@ const MODULES: ModuleConfig[] = [
   {
     id: 'Shot Analyzer',
     label: 'Shot Analyzer',
-    description: 'Upload & review',
+    description: 'Log & analyze',
     icon: <Video size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/(home)',
+    route: '/shot-analyzer',
   },
 ];
 

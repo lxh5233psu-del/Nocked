@@ -51,6 +51,7 @@ export default function RootLayout() {
         <Stack.Screen name="form" />
         <Stack.Screen name="tuning" />
         <Stack.Screen name="scoring" />
+        <Stack.Screen name="shot-analyzer" />
       </Stack>
     </GestureHandlerRootView>
   );
