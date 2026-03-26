@@ -65,7 +65,7 @@ const MODULES: ModuleConfig[] = [
     label: 'Score',
     description: 'ASA · IBO · NFAA',
     icon: <Award size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/(home)',
+    route: '/scoring',
   },
   {
     id: 'Shot Analyzer',

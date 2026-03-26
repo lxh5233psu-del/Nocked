@@ -189,6 +189,46 @@ export interface SessionSummary {
   timestamp: number;
 }
 
+// ─── Scoring Types ───────────────────────────────────────────────────────────
+
+export type ScoringFormat = 'ASA' | 'IBO' | 'NFAA';
+
+export interface ScoringFormatConfig {
+  format: ScoringFormat;
+  label: string;
+  description: string;
+  defaultTargets: number;
+  zones: ScoringZone[];
+  maxScorePerTarget: number;
+}
+
+export interface ScoringZone {
+  value: number;
+  label: string;
+  description?: string;
+}
+
+export interface ShotScore {
+  targetNumber: number;
+  score: number;
+  zoneName: string;
+  distance?: number;
+  notes?: string;
+}
+
+export interface ScoringRound {
+  id: string;
+  format: ScoringFormat;
+  date: number;
+  bowId?: string;
+  location?: string;
+  totalTargets: number;
+  shots: ShotScore[];
+  totalScore: number;
+  completed: boolean;
+  notes?: string;
+}
+
 // ─── Bow Database Types ───────────────────────────────────────────────────────
 
 export type CamType = 'Single' | 'Binary' | 'Hybrid' | 'Solo';

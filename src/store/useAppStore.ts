@@ -11,6 +11,7 @@ import {
   ReleaseProfile,
   SessionSummary,
   ModuleType,
+  ScoringRound,
 } from '@/types';
 
 // ─── State Shape ──────────────────────────────────────────────────────────────
@@ -34,6 +35,10 @@ interface AppState {
 
   // Release
   releaseProfile: ReleaseProfile | null;
+
+  // Scoring
+  scoringRounds: ScoringRound[];
+  activeScoringRoundId: string | null;
 
   // Session tracking
   lastSession: SessionSummary | null;
@@ -76,6 +81,12 @@ interface AppActions {
   // Release
   setReleaseProfile: (release: ReleaseProfile) => void;
 
+  // Scoring
+  addScoringRound: (round: ScoringRound) => void;
+  updateScoringRound: (id: string, updates: Partial<ScoringRound>) => void;
+  deleteScoringRound: (id: string) => void;
+  setActiveScoringRound: (id: string | null) => void;
+
   // Session
   setLastSession: (session: SessionSummary) => void;
 
@@ -97,6 +108,8 @@ const initialState: AppState = {
   arrowProfiles: [],
   activeArrowId: null,
   releaseProfile: null,
+  scoringRounds: [],
+  activeScoringRoundId: null,
   lastSession: null,
   formRemindersEnabled: true,
   formReminderFrequency: 'every session',
@@ -214,6 +227,29 @@ export const useAppStore = create<AppState & AppActions>()(
 
       // ── Release ─────────────────────────────────────────────────────────────
       setReleaseProfile: (release) => set({ releaseProfile: release }),
+
+      // ── Scoring ────────────────────────────────────────────────────────────
+      addScoringRound: (round) =>
+        set((state) => ({
+          scoringRounds: [round, ...state.scoringRounds],
+          activeScoringRoundId: round.id,
+        })),
+
+      updateScoringRound: (id, updates) =>
+        set((state) => ({
+          scoringRounds: state.scoringRounds.map((r) =>
+            r.id === id ? { ...r, ...updates } : r
+          ),
+        })),
+
+      deleteScoringRound: (id) =>
+        set((state) => ({
+          scoringRounds: state.scoringRounds.filter((r) => r.id !== id),
+          activeScoringRoundId:
+            state.activeScoringRoundId === id ? null : state.activeScoringRoundId,
+        })),
+
+      setActiveScoringRound: (id) => set({ activeScoringRoundId: id }),
 
       // ── Session ─────────────────────────────────────────────────────────────
       setLastSession: (session) => set({ lastSession: session }),
