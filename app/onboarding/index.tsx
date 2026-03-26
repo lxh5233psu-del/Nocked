@@ -171,7 +171,7 @@ export default function OnboardingScreen() {
       {/* CTA */}
       <View style={styles.footer}>
         <TouchableOpacity
-          onPress={() => router.replace('/')}
+          onPress={() => router.replace('/home')}
           activeOpacity={0.85}
           disabled={!canContinue}
           style={[styles.cta, !canContinue && styles.ctaDisabled]}
@@ -179,7 +179,7 @@ export default function OnboardingScreen() {
           <Text style={styles.ctaText}>Set Up My Profile</Text>
           <ChevronRight size={18} color={Colors.bgPrimary} strokeWidth={2} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.replace('/')} style={styles.skip}>
+        <TouchableOpacity onPress={() => router.replace('/home')} style={styles.skip}>
           <Text style={styles.skipText}>Skip for now</Text>
         </TouchableOpacity>
       </View>

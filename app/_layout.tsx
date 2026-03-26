@@ -4,29 +4,25 @@ import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import {
-  CormorantGaramond_400Regular,
-  CormorantGaramond_700Bold,
-} from '@expo-google-fonts/cormorant-garamond';
-import {
-  Raleway_400Regular,
-  Raleway_500Medium,
-} from '@expo-google-fonts/raleway';
-import {
-  Montserrat_500Medium,
-  Montserrat_600SemiBold,
-} from '@expo-google-fonts/montserrat';
+  Exo2_400Regular,
+  Exo2_500Medium,
+  Exo2_600SemiBold,
+  Exo2_700Bold,
+  Exo2_800ExtraBold,
+  Exo2_900Black,
+} from '@expo-google-fonts/exo-2';
 import { Colors } from '@/constants/theme';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
-    CormorantGaramond_400Regular,
-    CormorantGaramond_700Bold,
-    Raleway_400Regular,
-    Raleway_500Medium,
-    Montserrat_500Medium,
-    Montserrat_600SemiBold,
+    Exo2_400Regular,
+    Exo2_500Medium,
+    Exo2_600SemiBold,
+    Exo2_700Bold,
+    Exo2_800ExtraBold,
+    Exo2_900Black,
   });
 
   useEffect(() => {
@@ -39,7 +35,7 @@ export default function RootLayout() {
 
   return (
     <>
-      <StatusBar style="dark" backgroundColor={Colors.bgPrimary} />
+      <StatusBar style="light" backgroundColor={Colors.welcomeBg} />
       <Stack
         screenOptions={{
           headerShown: false,
@@ -47,7 +43,11 @@ export default function RootLayout() {
           animation: 'slide_from_right',
         }}
       >
-        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="index"
+          options={{ contentStyle: { backgroundColor: Colors.welcomeBg } }}
+        />
+        <Stack.Screen name="home/index" />
         <Stack.Screen name="onboarding/index" />
         <Stack.Screen name="setup/index" />
         <Stack.Screen name="form/index" />

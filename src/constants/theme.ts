@@ -6,7 +6,7 @@ export const Colors = {
   bgSecondary: '#EDE7D9',
   bgTertiary: '#E5DDD0',
 
-  // Clay spectrum (dark → light) — NO pure green, only archery-warm tones
+  // Clay spectrum
   clayDarkest: '#2E2720',
   clayDark: '#4A3D32',
   clayMid: '#6B5744',
@@ -26,39 +26,44 @@ export const Colors = {
   border: '#D4C9B8',
   borderLight: '#E8E0D0',
 
-  // Status — muted, on-brand
+  // Status
   statusComplete: '#5C7A5C',
   statusWarning: '#8A6A2E',
   statusInfo: '#4A6B8A',
+
+  // Welcome screen
+  welcomeBg: '#0C0907',
+  welcomeBgMid: '#1A110A',
 } as const;
 
 // ─── Typography ───────────────────────────────────────────────────────────────
+// All weights use Exo 2 — bold, modern, rugged feel
 
 export const Typography = {
-  // Cormorant Garamond — display / headings
-  display: {
-    fontFamily: 'CormorantGaramond_400Regular',
-  },
-  displayBold: {
-    fontFamily: 'CormorantGaramond_700Bold',
-  },
-
-  // Raleway — body text
+  // Light body text
   body: {
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: 'Exo2_400Regular',
   },
   bodyMedium: {
-    fontFamily: 'Raleway_500Medium',
+    fontFamily: 'Exo2_500Medium',
   },
 
-  // Montserrat — labels, caps, UI chrome
+  // UI labels and buttons
   label: {
-    fontFamily: 'Montserrat_500Medium',
-    letterSpacing: 0.5,
+    fontFamily: 'Exo2_600SemiBold',
+    letterSpacing: 0.4,
   },
   labelMedium: {
-    fontFamily: 'Montserrat_600SemiBold',
-    letterSpacing: 0.5,
+    fontFamily: 'Exo2_700Bold',
+    letterSpacing: 0.4,
+  },
+
+  // Headings and display
+  display: {
+    fontFamily: 'Exo2_800ExtraBold',
+  },
+  displayBold: {
+    fontFamily: 'Exo2_900Black',
   },
 } as const;
 

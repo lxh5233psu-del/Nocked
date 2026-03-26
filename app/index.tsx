@@ -1,461 +1,184 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
-  Modal,
+  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import {
-  Settings,
-  Target,
-  Crosshair,
-  SlidersHorizontal,
-  Award,
-  Video,
-  ChevronRight,
-  CheckCircle,
-  Circle,
-  ChevronDown,
-  Check,
-} from 'lucide-react-native';
-import { Card } from '@/components/ui/Card';
-import { Colors, Typography, FontSizes, Spacing, Radius } from '@/constants/theme';
+import { ChevronRight } from 'lucide-react-native';
+import { Colors, Typography, FontSizes, Spacing } from '@/constants/theme';
 
-// ─── Placeholder data ─────────────────────────────────────────────────────────
+const { height } = Dimensions.get('window');
 
-const ARCHER = { name: 'Sarah Mitchell' };
+// ─────────────────────────────────────────────────────────────────────────────
+//  Welcome / Landing Screen
+//
+//  TODO: Replace the dark background with a full-screen bow hunter photo.
+//  Swap the <View style={styles.photo} /> for:
+//
+//    import { ImageBackground } from 'react-native';
+//    <ImageBackground source={require('../assets/welcome-bg.jpg')} style={styles.photo} />
+//
+//  Drop your photo into /assets/welcome-bg.jpg and the layout will be complete.
+// ─────────────────────────────────────────────────────────────────────────────
 
-const ACTIVE_BOW = {
-  nickname: '2024 Hoyt Carbon RX-9',
-  manufacturer: 'Hoyt',
-  drawWeight: 68,
-  drawLength: 28.5,
-};
-
-const BOW_LIST = [
-  { id: '1', nickname: '2024 Hoyt Carbon RX-9', manufacturer: 'Hoyt', drawWeight: 68, drawLength: 28.5, active: true },
-  { id: '2', nickname: '2022 Mathews V3X', manufacturer: 'Mathews', drawWeight: 65, drawLength: 27.5, active: false },
-];
-
-const LAST_SESSION = {
-  module: 'Form',
-  step: 'Release Technique',
-  route: '/form',
-};
-
-const TUNING_STATUS = [
-  { key: 'setup', label: 'Setup', complete: true },
-  { key: 'sight-in', label: 'Sight-In', complete: true },
-  { key: 'paper', label: 'Paper Tuning', complete: false },
-  { key: 'walk-back', label: 'Walk-Back', complete: false },
-  { key: 'bare-shaft', label: 'Bare Shaft', complete: false },
-];
-
-const MODULES = [
-  {
-    id: 'setup',
-    label: 'Setup',
-    description: '12-step bow setup',
-    icon: <SlidersHorizontal size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/setup',
-  },
-  {
-    id: 'form',
-    label: 'Form',
-    description: '8 components',
-    icon: <Target size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/form',
-  },
-  {
-    id: 'tuning',
-    label: 'Tune',
-    description: '6 standard methods',
-    icon: <Crosshair size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/tuning',
-  },
-  {
-    id: 'scoring',
-    label: 'Score',
-    description: 'ASA · IBO · NFAA',
-    icon: <Award size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/scoring',
-  },
-  {
-    id: 'shot-analyzer',
-    label: 'Shot Analyzer',
-    description: 'Log & analyze',
-    icon: <Video size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/shot-analyzer',
-  },
-];
-
-// ─── Component ────────────────────────────────────────────────────────────────
-
-function getGreeting(name: string): string {
-  const hour = new Date().getHours();
-  const time = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-  return `${time}, ${name}`;
-}
-
-export default function HomeScreen() {
-  const [bowSwitcherOpen, setBowSwitcherOpen] = useState(false);
-
+export default function WelcomeScreen() {
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* ── Top bar ── */}
-        <View style={styles.topBar}>
-          <View>
-            <Text style={styles.greeting}>{getGreeting(ARCHER.name)}</Text>
+    <View style={styles.root}>
+
+      {/* ── Photo / background ─────────────────────────────── */}
+      {/* Replace this View with an ImageBackground once you have the photo */}
+      <View style={styles.photo}>
+        {/* Subtle horizon glow to suggest a sky / landscape */}
+        <View style={styles.horizonGlow} />
+      </View>
+
+      {/* ── Gradient overlay (dark from bottom) ────────────── */}
+      <View style={styles.gradientLayer1} />
+      <View style={styles.gradientLayer2} />
+      <View style={styles.gradientLayer3} />
+      <View style={styles.gradientLayer4} />
+
+      {/* ── Content ────────────────────────────────────────── */}
+      <SafeAreaView style={styles.safe} edges={['bottom', 'top']}>
+        <View style={styles.content}>
+
+          {/* Top spacer */}
+          <View style={{ flex: 1 }} />
+
+          {/* Title block */}
+          <View style={styles.titleBlock}>
             <Text style={styles.wordmark}>NOCKED</Text>
+            <View style={styles.divider} />
+            <Text style={styles.tagline}>Precision Bow Tuning &amp; Coaching</Text>
           </View>
+
+          {/* Enter button */}
           <TouchableOpacity
-            onPress={() => router.push('/settings')}
-            style={styles.settingsBtn}
-            hitSlop={12}
+            onPress={() => router.replace('/home')}
+            activeOpacity={0.8}
+            style={styles.enterBtn}
           >
-            <Settings size={22} color={Colors.greyMid} strokeWidth={1.5} />
+            <Text style={styles.enterBtnText}>Enter</Text>
+            <ChevronRight size={18} color={Colors.bgPrimary} strokeWidth={2} />
           </TouchableOpacity>
+
+          <View style={{ height: Spacing.xxxl }} />
         </View>
-
-        {/* ── Active bow chip ── */}
-        <TouchableOpacity
-          onPress={() => setBowSwitcherOpen(true)}
-          activeOpacity={0.7}
-          style={styles.bowChip}
-        >
-          <View>
-            <Text style={styles.bowChipLabel}>Active Bow</Text>
-            <Text style={styles.bowChipName}>{ACTIVE_BOW.nickname}</Text>
-          </View>
-          <ChevronDown size={16} color={Colors.greyMid} strokeWidth={1.5} />
-        </TouchableOpacity>
-
-        {/* ── Last session card ── */}
-        <Card style={styles.sessionCard}>
-          <View style={styles.sessionRow}>
-            <View>
-              <Text style={styles.sessionMeta}>Last Session</Text>
-              <Text style={styles.sessionModule}>{LAST_SESSION.module}</Text>
-              <Text style={styles.sessionStep}>{LAST_SESSION.step}</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.continueBtn}
-              activeOpacity={0.7}
-              onPress={() => router.push(LAST_SESSION.route as any)}
-            >
-              <Text style={styles.continueBtnText}>Continue</Text>
-              <ChevronRight size={14} color={Colors.bgPrimary} strokeWidth={2} />
-            </TouchableOpacity>
-          </View>
-        </Card>
-
-        {/* ── Module grid ── */}
-        <Text style={styles.sectionLabel}>Modules</Text>
-        <View style={styles.moduleGrid}>
-          {MODULES.map((mod) => (
-            <TouchableOpacity
-              key={mod.id}
-              onPress={() => router.push(mod.route as any)}
-              activeOpacity={0.75}
-              style={styles.moduleCard}
-            >
-              <View style={styles.moduleIconWrap}>{mod.icon}</View>
-              <Text style={styles.moduleLabel}>{mod.label}</Text>
-              <Text style={styles.moduleDesc}>{mod.description}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* ── Tuning status ── */}
-        <Text style={styles.sectionLabel}>Tuning Status</Text>
-        <Card style={styles.statusCard}>
-          {TUNING_STATUS.map((item) => (
-            <View key={item.key} style={styles.statusRow}>
-              {item.complete ? (
-                <CheckCircle size={16} color={Colors.statusComplete} strokeWidth={1.5} />
-              ) : (
-                <Circle size={16} color={Colors.border} strokeWidth={1.5} />
-              )}
-              <Text style={[styles.statusLabel, item.complete && styles.statusLabelDone]}>
-                {item.label}
-              </Text>
-            </View>
-          ))}
-        </Card>
-
-        {/* ── Setup banner ── */}
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => router.push('/setup')}
-          style={styles.setupBanner}
-        >
-          <View style={styles.setupBannerBody}>
-            <Text style={styles.setupBannerTitle}>Setup Recommended</Text>
-            <Text style={styles.setupBannerText}>
-              Walk through all 12 steps to establish a solid tuning baseline.
-            </Text>
-          </View>
-          <ChevronRight size={18} color={Colors.bgPrimary} strokeWidth={1.5} />
-        </TouchableOpacity>
-      </ScrollView>
-
-      {/* ── Bow switcher sheet ── */}
-      <Modal visible={bowSwitcherOpen} animationType="slide" transparent>
-        <View style={styles.overlay}>
-          <SafeAreaView style={styles.sheet} edges={['bottom']}>
-            <View style={styles.sheetHandle} />
-            <Text style={styles.sheetTitle}>Select Bow</Text>
-            {BOW_LIST.map((bow) => (
-              <TouchableOpacity
-                key={bow.id}
-                onPress={() => setBowSwitcherOpen(false)}
-                style={styles.bowOption}
-                activeOpacity={0.7}
-              >
-                <View>
-                  <Text style={styles.bowOptionName}>{bow.nickname}</Text>
-                  <Text style={styles.bowOptionDetail}>
-                    {bow.manufacturer} · {bow.drawWeight} lbs · {bow.drawLength}"
-                  </Text>
-                </View>
-                {bow.active && (
-                  <Check size={16} color={Colors.clayDark} strokeWidth={2} />
-                )}
-              </TouchableOpacity>
-            ))}
-            <TouchableOpacity
-              onPress={() => setBowSwitcherOpen(false)}
-              style={styles.sheetCancel}
-            >
-              <Text style={styles.sheetCancelText}>Cancel</Text>
-            </TouchableOpacity>
-          </SafeAreaView>
-        </View>
-      </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 }
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.bgPrimary },
-  scroll: { flex: 1 },
-  scrollContent: {
-    paddingHorizontal: Spacing.lg,
-    paddingBottom: Spacing.xxxl,
+  root: {
+    flex: 1,
+    backgroundColor: Colors.welcomeBg,
   },
 
-  // Top bar
-  topBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    paddingTop: Spacing.lg,
-    marginBottom: Spacing.lg,
+  // Background photo placeholder
+  photo: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: Colors.welcomeBg,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  greeting: {
-    ...Typography.body,
-    fontSize: FontSizes.sm,
-    color: Colors.greyMid,
-    marginBottom: 2,
+
+  // Subtle lighter patch to suggest a distant sky / horizon
+  horizonGlow: {
+    position: 'absolute',
+    top: '15%',
+    left: '10%',
+    right: '10%',
+    height: height * 0.22,
+    backgroundColor: Colors.welcomeBgMid,
+    borderRadius: 999,
+    opacity: 0.5,
+  },
+
+  // Stacked semi-transparent layers that simulate a dark gradient
+  // rising from the bottom — each gets progressively more opaque
+  gradientLayer1: {
+    ...StyleSheet.absoluteFillObject,
+    top: '30%',
+    backgroundColor: 'rgba(12,9,7,0.25)',
+  },
+  gradientLayer2: {
+    ...StyleSheet.absoluteFillObject,
+    top: '48%',
+    backgroundColor: 'rgba(12,9,7,0.45)',
+  },
+  gradientLayer3: {
+    ...StyleSheet.absoluteFillObject,
+    top: '62%',
+    backgroundColor: 'rgba(12,9,7,0.65)',
+  },
+  gradientLayer4: {
+    ...StyleSheet.absoluteFillObject,
+    top: '74%',
+    backgroundColor: 'rgba(12,9,7,0.85)',
+  },
+
+  // Safe area container
+  safe: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: Spacing.xl,
+  },
+
+  // Title
+  titleBlock: {
+    alignItems: 'center',
+    gap: Spacing.lg,
+    marginBottom: Spacing.xxxl,
   },
   wordmark: {
     ...Typography.displayBold,
-    fontSize: FontSizes.xxxl,
-    color: Colors.textPrimary,
-    letterSpacing: 4,
+    fontSize: 64,
+    color: '#FFFFFF',
+    letterSpacing: 12,
+    textAlign: 'center',
   },
-  settingsBtn: {
-    padding: Spacing.xs,
-    marginTop: Spacing.xs,
+  divider: {
+    width: 48,
+    height: 1.5,
+    backgroundColor: Colors.clayLight,
+    opacity: 0.7,
   },
-
-  // Bow chip
-  bowChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: Colors.bgSecondary,
-    borderRadius: Radius.md,
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.md,
-    marginBottom: Spacing.lg,
-  },
-  bowChipLabel: {
-    ...Typography.label,
-    fontSize: FontSizes.xs,
-    color: Colors.greyLight,
-    marginBottom: 2,
-  },
-  bowChipName: {
-    ...Typography.bodyMedium,
-    fontSize: FontSizes.base,
-    color: Colors.textPrimary,
-  },
-
-  // Last session
-  sessionCard: { marginBottom: Spacing.lg },
-  sessionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  sessionMeta: {
-    ...Typography.label,
-    fontSize: FontSizes.xs,
-    color: Colors.greyLight,
-    marginBottom: 3,
-  },
-  sessionModule: {
-    ...Typography.bodyMedium,
-    fontSize: FontSizes.base,
-    color: Colors.textPrimary,
-  },
-  sessionStep: {
+  tagline: {
     ...Typography.body,
     fontSize: FontSizes.sm,
-    color: Colors.textSecondary,
+    color: 'rgba(255,255,255,0.55)',
+    letterSpacing: 1.5,
+    textAlign: 'center',
+    textTransform: 'uppercase',
   },
-  continueBtn: {
+
+  // Enter button
+  enterBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.xs,
-    backgroundColor: Colors.clayDark,
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.md,
-    borderRadius: Radius.md,
-  },
-  continueBtnText: {
-    ...Typography.label,
-    fontSize: FontSizes.xs,
-    color: Colors.bgPrimary,
-  },
-
-  // Section label
-  sectionLabel: {
-    ...Typography.label,
-    fontSize: FontSizes.xs,
-    color: Colors.greyLight,
-    marginBottom: Spacing.md,
-  },
-
-  // Module grid
-  moduleGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    justifyContent: 'center',
     gap: Spacing.sm,
-    marginBottom: Spacing.xl,
-  },
-  moduleCard: {
-    width: '48%',
-    backgroundColor: Colors.bgSecondary,
-    borderRadius: Radius.lg,
-    padding: Spacing.md,
-    gap: Spacing.xs,
-  },
-  moduleIconWrap: { marginBottom: Spacing.xs },
-  moduleLabel: {
-    ...Typography.labelMedium,
-    fontSize: FontSizes.sm,
-    color: Colors.textPrimary,
-  },
-  moduleDesc: {
-    ...Typography.body,
-    fontSize: FontSizes.xs,
-    color: Colors.greyMid,
-  },
-
-  // Tuning status
-  statusCard: { gap: Spacing.md, marginBottom: Spacing.xl },
-  statusRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  statusLabel: {
-    ...Typography.body,
-    fontSize: FontSizes.sm,
-    color: Colors.greyMid,
-  },
-  statusLabelDone: { color: Colors.textPrimary },
-
-  // Setup banner
-  setupBanner: {
-    backgroundColor: Colors.clayDarkest,
-    borderRadius: Radius.lg,
-    padding: Spacing.md,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.md,
-  },
-  setupBannerBody: { flex: 1, gap: Spacing.xs },
-  setupBannerTitle: {
-    ...Typography.labelMedium,
-    fontSize: FontSizes.sm,
-    color: Colors.bgPrimary,
-  },
-  setupBannerText: {
-    ...Typography.body,
-    fontSize: FontSizes.sm,
-    color: Colors.bgSecondary,
-    lineHeight: 18,
-  },
-
-  // Bow switcher modal
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(46,39,32,0.45)',
-    justifyContent: 'flex-end',
-  },
-  sheet: {
-    backgroundColor: Colors.bgPrimary,
-    borderTopLeftRadius: Radius.xxl,
-    borderTopRightRadius: Radius.xxl,
-    paddingHorizontal: Spacing.lg,
-    paddingTop: Spacing.md,
-  },
-  sheetHandle: {
-    width: 40,
-    height: 3,
-    backgroundColor: Colors.border,
-    borderRadius: Radius.full,
-    alignSelf: 'center',
-    marginBottom: Spacing.md,
-  },
-  sheetTitle: {
-    ...Typography.labelMedium,
-    fontSize: FontSizes.sm,
-    color: Colors.greyMid,
-    marginBottom: Spacing.md,
-  },
-  bowOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
+    borderRadius: 4,
     paddingVertical: Spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.borderLight,
+    paddingHorizontal: Spacing.xxl,
+    alignSelf: 'center',
   },
-  bowOptionName: {
-    ...Typography.bodyMedium,
-    fontSize: FontSizes.base,
-    color: Colors.textPrimary,
-  },
-  bowOptionDetail: {
-    ...Typography.body,
-    fontSize: FontSizes.sm,
-    color: Colors.greyMid,
-  },
-  sheetCancel: { alignItems: 'center', paddingVertical: Spacing.lg },
-  sheetCancelText: {
+  enterBtnText: {
     ...Typography.label,
-    fontSize: FontSizes.sm,
-    color: Colors.greyMid,
+    fontSize: FontSizes.base,
+    color: Colors.bgPrimary,
+    letterSpacing: 3,
+    textTransform: 'uppercase',
   },
 });
