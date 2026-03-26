@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { ChevronLeft, ChevronRight, Plus, Clock } from 'lucide-react-native';
 import { useAppStore } from '@/store/useAppStore';
+import { AnimatedEntry } from '@/components/ui/AnimatedEntry';
 import { Colors, Typography, Spacing, Radius, FontSizes } from '@/constants/theme';
 import { ScoringRound } from '@/types';
 
@@ -42,6 +43,7 @@ export default function ScoringHubScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        <AnimatedEntry delay={60}>
         <Text style={styles.pageTitle}>Scoring</Text>
         <Text style={styles.pageSubtitle}>
           Track your rounds for ASA, IBO, and NFAA formats.
@@ -121,6 +123,7 @@ export default function ScoringHubScreen() {
             bonus="Field / Hunter / Animal"
           />
         </View>
+        </AnimatedEntry>
       </ScrollView>
     </SafeAreaView>
   );

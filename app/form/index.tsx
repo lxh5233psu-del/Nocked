@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
+import { AnimatedEntry } from '@/components/ui/AnimatedEntry';
 import { Colors, Typography, Spacing, Radius, FontSizes } from '@/constants/theme';
 
 const FORM_COMPONENTS = [
@@ -32,6 +33,7 @@ export default function FormHubScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        <AnimatedEntry delay={60}>
         <Text style={styles.subtitle}>
           8 components of compound bow shooting form. Master each individually,
           then combine into a consistent shot sequence.
@@ -54,6 +56,7 @@ export default function FormHubScreen() {
             <ChevronRight size={16} color={Colors.greyLight} strokeWidth={1.5} />
           </TouchableOpacity>
         ))}
+        </AnimatedEntry>
       </ScrollView>
     </SafeAreaView>
   );

@@ -15,6 +15,7 @@ import {
   Circle,
 } from 'lucide-react-native';
 import { useAppStore } from '@/store/useAppStore';
+import { AnimatedEntry } from '@/components/ui/AnimatedEntry';
 import { Colors, Typography, Spacing, Radius, FontSizes } from '@/constants/theme';
 
 const TUNING_METHODS = [
@@ -79,6 +80,7 @@ export default function TuningHubScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        <AnimatedEntry delay={60}>
         {/* Active bow context */}
         {activeBow && (
           <View style={styles.bowContext}>
@@ -171,6 +173,7 @@ export default function TuningHubScreen() {
             </TouchableOpacity>
           );
         })}
+        </AnimatedEntry>
       </ScrollView>
     </SafeAreaView>
   );

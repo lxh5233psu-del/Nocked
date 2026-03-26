@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { ChevronLeft, ChevronRight, Plus, BarChart2 } from 'lucide-react-native';
 import { useAppStore } from '@/store/useAppStore';
+import { AnimatedEntry } from '@/components/ui/AnimatedEntry';
 import { Colors, Typography, Spacing, Radius, FontSizes } from '@/constants/theme';
 import { ShotSession } from '@/types';
 
@@ -53,6 +54,7 @@ export default function ShotAnalyzerHubScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        <AnimatedEntry delay={60}>
         <Text style={styles.pageTitle}>Shot Analyzer</Text>
         <Text style={styles.pageSubtitle}>
           Log practice sessions end-by-end. Tag form issues, track conditions, and review patterns over time.
@@ -129,6 +131,7 @@ export default function ShotAnalyzerHubScreen() {
             </Text>
           </View>
         )}
+        </AnimatedEntry>
       </ScrollView>
     </SafeAreaView>
   );

@@ -23,6 +23,7 @@ import {
   Check,
 } from 'lucide-react-native';
 import { Card } from '@/components/ui/Card';
+import { AnimatedEntry } from '@/components/ui/AnimatedEntry';
 import { useAppStore } from '@/store/useAppStore';
 import { Colors, Typography, Spacing, Radius, FontSizes } from '@/constants/theme';
 import { ModuleType } from '@/types';
@@ -108,19 +109,21 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Top bar */}
-        <View style={styles.topBar}>
-          <View>
-            <Text style={styles.greeting}>{greeting}</Text>
-            <Text style={styles.tagline}>NOCKED</Text>
+        <AnimatedEntry delay={0}>
+          <View style={styles.topBar}>
+            <View>
+              <Text style={styles.greeting}>{greeting}</Text>
+              <Text style={styles.tagline}>NOCKED</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => router.push('/settings')}
+              style={styles.settingsButton}
+              hitSlop={12}
+            >
+              <Settings size={22} color={Colors.greyMid} strokeWidth={1.5} />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={() => router.push('/settings')}
-            style={styles.settingsButton}
-            hitSlop={12}
-          >
-            <Settings size={22} color={Colors.greyMid} strokeWidth={1.5} />
-          </TouchableOpacity>
-        </View>
+        </AnimatedEntry>
 
         {/* Active bow switcher */}
         {bowProfiles.length > 0 && (
@@ -153,39 +156,50 @@ export default function HomeScreen() {
 
         {/* Last session card */}
         {lastSession && (
-          <Card style={styles.sessionCard}>
-            <View style={styles.sessionRow}>
-              <View>
-                <Text style={styles.sessionLabel}>Last Session</Text>
-                <Text style={styles.sessionModule}>{lastSession.module}</Text>
-                {lastSession.step && (
-                  <Text style={styles.sessionStep}>{lastSession.step}</Text>
-                )}
+          <AnimatedEntry delay={80}>
+            <Card style={styles.sessionCard}>
+              <View style={styles.sessionRow}>
+                <View>
+                  <Text style={styles.sessionLabel}>Last Session</Text>
+                  <Text style={styles.sessionModule}>{lastSession.module}</Text>
+                  {lastSession.step && (
+                    <Text style={styles.sessionStep}>{lastSession.step}</Text>
+                  )}
+                </View>
+                <TouchableOpacity
+                  style={styles.continueButton}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    const mod = MODULES.find((m) => m.id === lastSession.module);
+                    if (mod) router.push(mod.route as any);
+                  }}
+                >
+                  <Text style={styles.continueText}>Continue</Text>
+                  <ChevronRight size={14} color={Colors.bgPrimary} strokeWidth={2} />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity style={styles.continueButton} activeOpacity={0.7}>
-                <Text style={styles.continueText}>Continue</Text>
-                <ChevronRight size={14} color={Colors.bgPrimary} strokeWidth={2} />
-              </TouchableOpacity>
-            </View>
-          </Card>
+            </Card>
+          </AnimatedEntry>
         )}
 
         {/* Module grid */}
-        <Text style={styles.sectionLabel}>Modules</Text>
-        <View style={styles.moduleGrid}>
-          {MODULES.map((mod) => (
-            <TouchableOpacity
-              key={mod.id}
-              onPress={() => router.push(mod.route as any)}
-              activeOpacity={0.7}
-              style={styles.moduleCard}
-            >
-              <View style={styles.moduleIcon}>{mod.icon}</View>
-              <Text style={styles.moduleLabel}>{mod.label}</Text>
-              <Text style={styles.moduleDescription}>{mod.description}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <AnimatedEntry delay={140}>
+          <Text style={styles.sectionLabel}>Modules</Text>
+          <View style={styles.moduleGrid}>
+            {MODULES.map((mod) => (
+              <TouchableOpacity
+                key={mod.id}
+                onPress={() => router.push(mod.route as any)}
+                activeOpacity={0.7}
+                style={styles.moduleCard}
+              >
+                <View style={styles.moduleIcon}>{mod.icon}</View>
+                <Text style={styles.moduleLabel}>{mod.label}</Text>
+                <Text style={styles.moduleDescription}>{mod.description}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </AnimatedEntry>
 
         {/* Tuning status */}
         {activeBow && (
@@ -223,6 +237,7 @@ export default function HomeScreen() {
         {activeBow && !activeBow.setupComplete && (
           <TouchableOpacity
             activeOpacity={0.8}
+            onPress={() => router.push('/setup')}
             style={styles.setupBanner}
           >
             <View style={styles.setupBannerContent}>

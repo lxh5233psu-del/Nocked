@@ -12,6 +12,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { ChevronLeft, CheckCircle } from 'lucide-react-native';
 import { useAppStore } from '@/store/useAppStore';
 import { getFormatConfig } from '@/data/scoring-formats';
+import { ScalePress } from '@/components/ui/ScalePress';
 import { Colors, Typography, Spacing, Radius, FontSizes } from '@/constants/theme';
 import { ShotScore } from '@/types';
 
@@ -147,10 +148,9 @@ export default function ScorecardScreen() {
         {!isComplete && (
           <View style={styles.zoneGrid}>
             {formatConfig.zones.map((zone) => (
-              <TouchableOpacity
+              <ScalePress
                 key={zone.label}
                 onPress={() => handleScore(zone)}
-                activeOpacity={0.7}
                 style={[
                   styles.zoneButton,
                   zone.value === 0 && styles.zoneMiss,
@@ -176,7 +176,7 @@ export default function ScorecardScreen() {
                     {zone.value > 0 ? `${zone.value} pts` : 'Miss'}
                   </Text>
                 )}
-              </TouchableOpacity>
+              </ScalePress>
             ))}
           </View>
         )}
