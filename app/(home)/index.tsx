@@ -58,7 +58,7 @@ const MODULES: ModuleConfig[] = [
     label: 'Tune',
     description: '6 standard methods',
     icon: <Crosshair size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/(home)',
+    route: '/tuning',
   },
   {
     id: 'Score',

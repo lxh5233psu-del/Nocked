@@ -49,6 +49,7 @@ export default function RootLayout() {
         <Stack.Screen name="(home)" />
         <Stack.Screen name="setup" />
         <Stack.Screen name="form" />
+        <Stack.Screen name="tuning" />
       </Stack>
     </GestureHandlerRootView>
   );
