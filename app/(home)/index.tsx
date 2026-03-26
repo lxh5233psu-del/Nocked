@@ -44,7 +44,7 @@ const MODULES: ModuleConfig[] = [
     label: 'Setup',
     description: '12-step bow setup',
     icon: <SlidersHorizontal size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/(home)',
+    route: '/setup',
   },
   {
     id: 'Form',

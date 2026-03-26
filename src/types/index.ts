@@ -98,7 +98,41 @@ export interface BowProfile {
   sightModel?: string;
   // Tuning state
   setupComplete: boolean;
+  setupStepsComplete: number[];
+  setupData: BowSetupData;
   tuningModulesComplete: string[];
+}
+
+// ─── Setup Data (measurements recorded during setup) ─────────────────────────
+
+export type NockingPointOption = 'dloop-both' | 'dloop-below' | 'dloop-only';
+
+export interface BowSetupData {
+  // Step 1: Safety Check
+  safetyCheckPassed?: boolean;
+  safetyIssuesFound?: string[];
+
+  // Step 2: Brace Height & A2A
+  measuredBraceHeight?: number;
+  measuredAxleToAxle?: number;
+  braceHeightInSpec?: boolean;
+  axleToAxleInSpec?: boolean;
+
+  // Step 3: Rest Installation
+  restInstalled?: boolean;
+
+  // Step 4: Nocking Point / D-Loop
+  nockingPointOption?: NockingPointOption;
+  dloopInstalled?: boolean;
+
+  // Step 5: Centershot
+  centershortVerified?: boolean;
+
+  // Step 6: Draw Weight
+  limbBoltTurnsFromMax?: number;
+  estimatedDrawWeight?: number;
+
+  // Step 7+: reserved for Sprint 3
 }
 
 // ─── Arrow Profile ────────────────────────────────────────────────────────────

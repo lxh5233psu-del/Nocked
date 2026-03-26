@@ -6,6 +6,7 @@ import {
   Discipline,
   Tool,
   BowProfile,
+  BowSetupData,
   ArrowProfile,
   ReleaseProfile,
   SessionSummary,
@@ -62,6 +63,8 @@ interface AppActions {
   setActiveBow: (id: string) => void;
   getActiveBow: () => BowProfile | null;
   markBowSetupComplete: (id: string) => void;
+  markSetupStepComplete: (bowId: string, step: number) => void;
+  updateSetupData: (bowId: string, data: Partial<BowSetupData>) => void;
   markTuningModuleComplete: (bowId: string, module: string) => void;
 
   // Arrow profiles
@@ -151,6 +154,24 @@ export const useAppStore = create<AppState & AppActions>()(
         set((state) => ({
           bowProfiles: state.bowProfiles.map((b) =>
             b.id === id ? { ...b, setupComplete: true } : b
+          ),
+        })),
+
+      markSetupStepComplete: (bowId, step) =>
+        set((state) => ({
+          bowProfiles: state.bowProfiles.map((b) =>
+            b.id === bowId && !b.setupStepsComplete.includes(step)
+              ? { ...b, setupStepsComplete: [...b.setupStepsComplete, step] }
+              : b
+          ),
+        })),
+
+      updateSetupData: (bowId, data) =>
+        set((state) => ({
+          bowProfiles: state.bowProfiles.map((b) =>
+            b.id === bowId
+              ? { ...b, setupData: { ...b.setupData, ...data } }
+              : b
           ),
         })),
 

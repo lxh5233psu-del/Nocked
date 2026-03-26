@@ -85,6 +85,8 @@ export default function BowScreen() {
       sightManufacturer: sightManufacturer || undefined,
       sightModel: sightModel || undefined,
       setupComplete: false,
+      setupStepsComplete: [],
+      setupData: {},
       tuningModulesComplete: [],
     };
 
