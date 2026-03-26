@@ -1,0 +1,206 @@
+// ─── Archer Profile ───────────────────────────────────────────────────────────
+
+export type Handedness = 'RH' | 'LH';
+export type ExperienceLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'Pro/Coach';
+export type Discipline = 'Target/3D' | 'Bowhunting' | 'Both';
+
+export interface ArcherProfile {
+  name: string;
+  handedness: Handedness;
+  experience: ExperienceLevel;
+}
+
+// ─── Tool Inventory ───────────────────────────────────────────────────────────
+
+export type Tool =
+  | 'Allen wrench set'
+  | 'Measuring tape'
+  | 'Bow square'
+  | 'Arrow level'
+  | 'String level'
+  | 'Bow vice'
+  | 'Draw weight scale'
+  | 'Nocking pliers'
+  | 'Serving thread'
+  | 'Serving tool'
+  | 'Lighter'
+  | 'Razor blade'
+  | 'Paper tuning frame'
+  | 'Bow press'
+  | 'Draw board'
+  | 'Chronograph'
+  | 'Spine tester'
+  | 'Arrow saw'
+  | 'Arrow fletching jig';
+
+export const ALL_TOOLS: Tool[] = [
+  'Allen wrench set',
+  'Measuring tape',
+  'Bow square',
+  'Arrow level',
+  'String level',
+  'Bow vice',
+  'Draw weight scale',
+  'Nocking pliers',
+  'Serving thread',
+  'Serving tool',
+  'Lighter',
+  'Razor blade',
+  'Paper tuning frame',
+  'Bow press',
+  'Draw board',
+  'Chronograph',
+  'Spine tester',
+  'Arrow saw',
+  'Arrow fletching jig',
+];
+
+// ─── Rest Types ───────────────────────────────────────────────────────────────
+
+export type RestType =
+  | 'Drop-away (cable)'
+  | 'Drop-away (limb)'
+  | 'Full capture'
+  | 'Shoot-through';
+
+// ─── Sight Types ──────────────────────────────────────────────────────────────
+
+export type SightType = 'Single pin' | 'Multi pin';
+
+// ─── Nock Types ───────────────────────────────────────────────────────────────
+
+export type NockType = 'Standard' | 'Lighted' | 'Half-moon' | 'Capture';
+
+// ─── Fletching ────────────────────────────────────────────────────────────────
+
+export type FletchingType = 'Plastic vane' | 'Feather' | 'Hybrid';
+export type VaneConfiguration = '3 fletch' | '4 fletch' | 'Helical' | 'Straight';
+
+// ─── Release ─────────────────────────────────────────────────────────────────
+
+export type ReleaseType = 'Wrist strap' | 'Thumb button' | 'Hinge' | 'Back tension' | 'Other';
+
+// ─── Bow Profile ─────────────────────────────────────────────────────────────
+
+export interface BowProfile {
+  id: string;
+  nickname: string;
+  manufacturer: string;
+  model: string;
+  year?: number;
+  drawWeight: number;
+  drawLength: number;
+  restType: RestType;
+  restManufacturer?: string;
+  restModel?: string;
+  sightType: SightType;
+  sightManufacturer?: string;
+  sightModel?: string;
+  // Tuning state
+  setupComplete: boolean;
+  tuningModulesComplete: string[];
+}
+
+// ─── Arrow Profile ────────────────────────────────────────────────────────────
+
+export interface ArrowProfile {
+  id: string;
+  manufacturer: string;
+  model: string;
+  length: number;
+  spine: number;
+  pointWeight: number;
+  nockType: NockType;
+  fletchingType: FletchingType;
+  vaneConfiguration: VaneConfiguration;
+}
+
+// ─── Release Profile ─────────────────────────────────────────────────────────
+
+export interface ReleaseProfile {
+  type: ReleaseType;
+  brand?: string;
+  model?: string;
+}
+
+// ─── Session Summary ──────────────────────────────────────────────────────────
+
+export type ModuleType = 'Setup' | 'Form' | 'Tune' | 'Score' | 'Shot Analyzer';
+
+export interface SessionSummary {
+  module: ModuleType;
+  step?: string;
+  timestamp: number;
+}
+
+// ─── Bow Database Types ───────────────────────────────────────────────────────
+
+export type CamType = 'Single' | 'Binary' | 'Hybrid' | 'Solo';
+
+export interface ModuleDrawLengthMap {
+  position: string;
+  drawLength: number;
+}
+
+export interface BowSpec {
+  id: string;
+  manufacturer: string;
+  model: string;
+  year: number;
+  drawWeightMin: number;
+  drawWeightMax: number;
+  drawLengthMin: number;
+  drawLengthMax: number;
+  braceHeightMin: number;
+  braceHeightMax: number;
+  axleToAxle: number;
+  camType: CamType;
+  letOff: number;
+  massWeight: number;
+  iboSpeed: number;
+  limbBoltMaxTurns: number;
+  limbBoltLbsPerTurn: number;
+  stringLength: number;
+  cableLengths: number[];
+  moduleDrawLengthMap: ModuleDrawLengthMap[];
+  camShimmingAvailable: boolean;
+  camShimmingInstructions?: string;
+  limbPocketAdjustment: boolean;
+  limbPocketInstructions?: string;
+  specialtyTuningSystems?: string;
+  bowPressRequiredForModules: boolean;
+}
+
+// ─── Sight Database Types ─────────────────────────────────────────────────────
+
+export type SightMountingType = 'Universal' | 'Picatinny' | 'Dovetail' | 'Through-mount';
+
+export interface SightSpec {
+  id: string;
+  manufacturer: string;
+  model: string;
+  mountingType: SightMountingType;
+  firstAxisMethod: string;
+  firstAxisLocation: string;
+  secondAxisMethod: string;
+  secondAxisLocation: string;
+  thirdAxisMethod: string;
+  thirdAxisLocation: string;
+  elevationRange?: string;
+  windageRange?: string;
+  hasBuiltInLevel: boolean;
+  hasVerticalSlider: boolean;
+}
+
+// ─── Rest Database Types ──────────────────────────────────────────────────────
+
+export interface RestSpec {
+  id: string;
+  manufacturer: string;
+  model: string;
+  restType: RestType;
+  cordAttachmentMethod: string;
+  horizontalAdjustmentRange?: string;
+  verticalAdjustmentRange?: string;
+  compatibleWithBowPress: boolean;
+}
