@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+
+  <!-- Outer bold circle border -->
+  <circle cx="200" cy="200" r="178" fill="#1A1A1A"/>
+
+  <!-- White background fill -->
+  <circle cx="200" cy="200" r="165" fill="#FFFFFF"/>
+
+  <!-- Thin inner decorative ring (double-circle effect) -->
+  <circle cx="200" cy="200" r="157" fill="none" stroke="#1A1A1A" stroke-width="2"/>
+
+  <!-- Left fletching feather — geometric swept vane -->
+  <polygon points="200,158 160,150 118,192 140,228 200,228" fill="#C8A97A"/>
+
+  <!-- Right fletching feather — mirror -->
+  <polygon points="200,158 240,150 282,192 260,228 200,228" fill="#C8A97A"/>
+
+  <!-- Arrow shaft — drawn on top to bisect feathers cleanly -->
+  <line x1="200" y1="148" x2="200" y2="292"
+        stroke="#1A1A1A" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Nock — V-fork at the very top of the shaft -->
+  <path d="M 191,136 L 200,148 L 209,136"
+        fill="none" stroke="#1A1A1A" stroke-width="5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+</svg>
