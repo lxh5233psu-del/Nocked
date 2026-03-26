@@ -114,7 +114,7 @@ export default function HomeScreen() {
             <Text style={styles.tagline}>NOCKED</Text>
           </View>
           <TouchableOpacity
-            onPress={() => router.push('/(home)')}
+            onPress={() => router.push('/settings')}
             style={styles.settingsButton}
             hitSlop={12}
           >
