@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Nocked",
+    "slug": "nocked",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "nocked",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.nocked.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F4EFE4"
+      },
+      "package": "com.nocked.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
