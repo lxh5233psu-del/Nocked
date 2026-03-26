@@ -346,8 +346,8 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   setupBannerBody: { flex: 1, gap: Spacing.xs },
-  setupBannerTitle: { ...Typography.labelMedium, fontSize: FontSizes.sm, color: Colors.bgPrimary },
-  setupBannerText: { ...Typography.body, fontSize: FontSizes.sm, color: Colors.bgSecondary, lineHeight: 18 },
+  setupBannerTitle: { ...Typography.labelMedium, fontSize: FontSizes.sm, color: Colors.textPrimary },
+  setupBannerText: { ...Typography.body, fontSize: FontSizes.sm, color: Colors.textSecondary, lineHeight: 18 },
 
   overlay: { flex: 1, backgroundColor: 'rgba(46,39,32,0.45)', justifyContent: 'flex-end' },
   sheet: {

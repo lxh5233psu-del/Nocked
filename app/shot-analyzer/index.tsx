@@ -259,8 +259,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   newSessionContent: { flex: 1 },
-  newSessionTitle: { ...Typography.labelMedium, fontSize: FontSizes.base, color: Colors.bgPrimary },
-  newSessionSub: { ...Typography.body, fontSize: FontSizes.xs, color: Colors.greyLight, marginTop: 2 },
+  newSessionTitle: { ...Typography.labelMedium, fontSize: FontSizes.base, color: Colors.textPrimary },
+  newSessionSub: { ...Typography.body, fontSize: FontSizes.xs, color: Colors.greyMid, marginTop: 2 },
 
   sectionLabel: {
     ...Typography.label,

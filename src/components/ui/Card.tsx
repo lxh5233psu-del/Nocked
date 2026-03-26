@@ -5,7 +5,7 @@ import { Colors, Radius, Spacing } from '@/constants/theme';
 interface CardProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
-  variant?: 'default' | 'outlined';
+  variant?: 'default' | 'outlined' | 'elevated';
 }
 
 export function Card({ children, style, variant = 'default' }: CardProps) {
@@ -14,6 +14,7 @@ export function Card({ children, style, variant = 'default' }: CardProps) {
       style={[
         styles.base,
         variant === 'outlined' && styles.outlined,
+        variant === 'elevated' && styles.elevated,
         style,
       ]}
     >
@@ -27,10 +28,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgSecondary,
     borderRadius: Radius.lg,
     padding: Spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
   outlined: {
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: Colors.border,
+  },
+  elevated: {
+    backgroundColor: Colors.bgTertiary,
+    borderWidth: 1,
+    borderColor: Colors.bgElevated,
   },
 });

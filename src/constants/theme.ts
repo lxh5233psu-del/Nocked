@@ -1,54 +1,52 @@
 // ─── Colors ───────────────────────────────────────────────────────────────────
 
 export const Colors = {
-  // Backgrounds
-  bgPrimary: '#F4EFE4',
-  bgSecondary: '#EDE7D9',
-  bgTertiary: '#E5DDD0',
+  // ── Backgrounds (dark → elevated) ──────────────────────────────────────────
+  bgPrimary:   '#0F0F0F',   // page background
+  bgSecondary: '#181818',   // cards, first elevation
+  bgTertiary:  '#232323',   // inputs, chips, second elevation
+  bgElevated:  '#2C2C2C',   // active states, third elevation
 
-  // Clay spectrum
-  clayDarkest: '#2E2720',
-  clayDark: '#4A3D32',
-  clayMid: '#6B5744',
-  clayLight: '#A08060',
-  clayPale: '#C4A882',
+  // ── Amber accent (replaces clay) ───────────────────────────────────────────
+  // Warm gold that pops against dark grey — premium, archery-appropriate
+  clayDarkest: '#1A1A1A',   // deep dark surface (banners, hero blocks)
+  clayDark:    '#C4975A',   // primary accent — action buttons, active states
+  clayMid:     '#8A6A3C',   // secondary accent
+  clayLight:   '#D4AE7A',   // light accent / highlight
+  clayPale:    '#E8CC9A',   // very light accent (badges, subtle tints)
 
-  // Text
-  textPrimary: '#2E2720',
-  textSecondary: '#6B5744',
+  // ── Text ───────────────────────────────────────────────────────────────────
+  textPrimary:   '#F0EDE8', // warm white — main content
+  textSecondary: '#9A9088', // warm mid-grey — supporting text
 
-  // Grey tones
-  greyDark: '#5A5048',
-  greyMid: '#8A7D70',
-  greyLight: '#B5A898',
+  // ── Greys ──────────────────────────────────────────────────────────────────
+  greyDark:  '#707070',     // strong secondary text
+  greyMid:   '#909090',     // icons, metadata, secondary labels
+  greyLight: '#5E5E5E',     // dim labels, captions, section headers
 
-  // Borders
-  border: '#D4C9B8',
-  borderLight: '#E8E0D0',
+  // ── Borders ────────────────────────────────────────────────────────────────
+  border:      '#2A2A2A',   // standard divider / card outline
+  borderLight: '#1E1E1E',   // subtle row divider
 
-  // Status
-  statusComplete: '#5C7A5C',
-  statusWarning: '#8A6A2E',
-  statusInfo: '#4A6B8A',
+  // ── Status ─────────────────────────────────────────────────────────────────
+  statusComplete: '#5A8A5A', // muted green
+  statusWarning:  '#C4975A', // amber (matches accent)
+  statusInfo:     '#5A7A9A', // muted steel blue
 
-  // Welcome screen
-  welcomeBg: '#0C0907',
+  // ── Welcome screen ─────────────────────────────────────────────────────────
+  welcomeBg:    '#0C0907',
   welcomeBgMid: '#1A110A',
 } as const;
 
 // ─── Typography ───────────────────────────────────────────────────────────────
-// All weights use Exo 2 — bold, modern, rugged feel
 
 export const Typography = {
-  // Light body text
   body: {
     fontFamily: 'Exo2_400Regular',
   },
   bodyMedium: {
     fontFamily: 'Exo2_500Medium',
   },
-
-  // UI labels and buttons
   label: {
     fontFamily: 'Exo2_600SemiBold',
     letterSpacing: 0.4,
@@ -57,8 +55,6 @@ export const Typography = {
     fontFamily: 'Exo2_700Bold',
     letterSpacing: 0.4,
   },
-
-  // Headings and display
   display: {
     fontFamily: 'Exo2_800ExtraBold',
   },
@@ -70,37 +66,37 @@ export const Typography = {
 // ─── Font sizes ───────────────────────────────────────────────────────────────
 
 export const FontSizes = {
-  xs: 11,
-  sm: 13,
-  base: 15,
-  md: 16,
-  lg: 18,
-  xl: 20,
-  xxl: 24,
-  xxxl: 32,
+  xs:      11,
+  sm:      13,
+  base:    15,
+  md:      16,
+  lg:      18,
+  xl:      20,
+  xxl:     24,
+  xxxl:    32,
   display: 42,
 } as const;
 
 // ─── Spacing ──────────────────────────────────────────────────────────────────
 
 export const Spacing = {
-  xxs: 2,
-  xs: 4,
-  sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 20,
-  xxl: 28,
+  xxs:  2,
+  xs:   4,
+  sm:   8,
+  md:   12,
+  lg:   16,
+  xl:   20,
+  xxl:  28,
   xxxl: 40,
 } as const;
 
 // ─── Border radius ────────────────────────────────────────────────────────────
 
 export const Radius = {
-  sm: 6,
-  md: 10,
-  lg: 14,
-  xl: 20,
-  xxl: 28,
+  sm:   6,
+  md:   10,
+  lg:   14,
+  xl:   20,
+  xxl:  28,
   full: 999,
 } as const;

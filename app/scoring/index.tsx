@@ -349,8 +349,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   newRoundContent: { flex: 1 },
-  newRoundTitle: { ...Typography.labelMedium, fontSize: FontSizes.base, color: Colors.bgPrimary },
-  newRoundSub: { ...Typography.body, fontSize: FontSizes.xs, color: Colors.greyLight, marginTop: 2 },
+  newRoundTitle: { ...Typography.labelMedium, fontSize: FontSizes.base, color: Colors.textPrimary },
+  newRoundSub: { ...Typography.body, fontSize: FontSizes.xs, color: Colors.greyMid, marginTop: 2 },
 
   sectionLabel: {
     ...Typography.label,
