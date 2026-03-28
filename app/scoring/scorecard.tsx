@@ -52,10 +52,20 @@ export default function ScorecardScreen() {
     const newTotal = newShots.reduce((sum, s) => sum + s.score, 0);
     const nowComplete = newShots.length >= round.totalTargets;
 
+    // Compute summary stats at completion time — never on read
+    const completionUpdates = nowComplete
+      ? {
+          avgPerTarget: newTotal / round.totalTargets,
+          missCount: newShots.filter((s) => s.score === 0).length,
+          xCount: newShots.filter((s) => s.zoneName === 'X').length,
+        }
+      : {};
+
     updateScoringRound(round.id, {
       shots: newShots,
       totalScore: newTotal,
       completed: nowComplete,
+      ...completionUpdates,
     });
 
     if (nowComplete) {

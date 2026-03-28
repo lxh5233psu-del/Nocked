@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { ChevronLeft, ChevronRight, Plus, Clock } from 'lucide-react-native';
+import { ChevronLeft, ChevronRight, Plus, Clock, TrendingUp } from 'lucide-react-native';
 import { useAppStore } from '@/store/useAppStore';
 import { AnimatedEntry } from '@/components/ui/AnimatedEntry';
 import { Colors, Typography, Spacing, Radius, FontSizes } from '@/constants/theme';
@@ -63,6 +63,20 @@ export default function ScoringHubScreen() {
             <Text style={styles.newRoundSub}>ASA · IBO · NFAA</Text>
           </View>
           <ChevronRight size={18} color={Colors.bgPrimary} strokeWidth={1.5} />
+        </TouchableOpacity>
+
+        {/* Performance Overview */}
+        <TouchableOpacity
+          onPress={() => router.push('/scoring/performance')}
+          activeOpacity={0.7}
+          style={styles.performanceButton}
+        >
+          <TrendingUp size={18} color={Colors.clayDark} strokeWidth={1.5} />
+          <View style={styles.performanceContent}>
+            <Text style={styles.performanceTitle}>Performance Overview</Text>
+            <Text style={styles.performanceSub}>Trends · averages · heat map</Text>
+          </View>
+          <ChevronRight size={16} color={Colors.clayMid} strokeWidth={1.5} />
         </TouchableOpacity>
 
         {/* Recent rounds */}
@@ -248,6 +262,31 @@ const styles = StyleSheet.create({
     ...Typography.label,
     fontSize: FontSizes.xs,
     color: Colors.clayLight,
+    marginTop: 2,
+  },
+
+  // Performance button
+  performanceButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    backgroundColor: Colors.bgSecondary,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+    marginBottom: Spacing.xl,
+    borderWidth: 1,
+    borderColor: Colors.borderLight,
+  },
+  performanceContent: { flex: 1 },
+  performanceTitle: {
+    ...Typography.labelMedium,
+    fontSize: FontSizes.sm,
+    color: Colors.clayDark,
+  },
+  performanceSub: {
+    ...Typography.label,
+    fontSize: FontSizes.xs,
+    color: Colors.greyLight,
     marginTop: 2,
   },
 

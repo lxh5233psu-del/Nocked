@@ -13,6 +13,7 @@ import {
   ModuleType,
   ScoringRound,
   ShotSession,
+  Course,
 } from '@/types';
 
 // ─── State Shape ──────────────────────────────────────────────────────────────
@@ -40,6 +41,9 @@ interface AppState {
   // Scoring
   scoringRounds: ScoringRound[];
   activeScoringRoundId: string | null;
+
+  // Courses
+  courses: Course[];
 
   // Shot Analyzer
   shotSessions: ShotSession[];
@@ -92,6 +96,11 @@ interface AppActions {
   deleteScoringRound: (id: string) => void;
   setActiveScoringRound: (id: string | null) => void;
 
+  // Courses
+  addCourse: (course: Course) => void;
+  updateCourse: (id: string, updates: Partial<Course>) => void;
+  deleteCourse: (id: string) => void;
+
   // Shot Analyzer
   addShotSession: (session: ShotSession) => void;
   updateShotSession: (id: string, updates: Partial<ShotSession>) => void;
@@ -121,6 +130,7 @@ const initialState: AppState = {
   releaseProfile: null,
   scoringRounds: [],
   activeScoringRoundId: null,
+  courses: [],
   shotSessions: [],
   activeSessionId: null,
   lastSession: null,
@@ -263,6 +273,18 @@ export const useAppStore = create<AppState & AppActions>()(
         })),
 
       setActiveScoringRound: (id) => set({ activeScoringRoundId: id }),
+
+      // ── Courses ─────────────────────────────────────────────────────────────
+      addCourse: (course) =>
+        set((state) => ({ courses: [...state.courses, course] })),
+
+      updateCourse: (id, updates) =>
+        set((state) => ({
+          courses: state.courses.map((c) => (c.id === id ? { ...c, ...updates } : c)),
+        })),
+
+      deleteCourse: (id) =>
+        set((state) => ({ courses: state.courses.filter((c) => c.id !== id) })),
 
       // ── Shot Analyzer ────────────────────────────────────────────────────────
       addShotSession: (session) =>

@@ -44,6 +44,9 @@ export default function NewRoundScreen() {
       totalTargets: formatConfig.defaultTargets,
       shots: [],
       totalScore: 0,
+      avgPerTarget: 0,
+      missCount: 0,
+      xCount: 0,
       completed: false,
     });
     setLastSession({ module: 'Score', step: `${selectedFormat} Round`, timestamp: Date.now() });

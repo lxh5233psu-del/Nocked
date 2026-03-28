@@ -212,6 +212,7 @@ export interface ShotScore {
   targetNumber: number;
   score: number;
   zoneName: string;
+  targetType?: string; // e.g. "Deer", "Bear" — populated when scoring a saved course
   distance?: number;
   notes?: string;
 }
@@ -221,12 +222,36 @@ export interface ScoringRound {
   format: ScoringFormat;
   date: number;
   bowId?: string;
+  courseId?: string; // links to a saved Course — enables per-course trend tracking
   location?: string;
   totalTargets: number;
   shots: ShotScore[];
   totalScore: number;
+  avgPerTarget: number; // stored at completion — totalScore / totalTargets
+  missCount: number;    // shots where score === 0, stored at completion
+  xCount: number;       // shots where zoneName === 'X', stored at completion
   completed: boolean;
   notes?: string;
+}
+
+// ─── Course Types ─────────────────────────────────────────────────────────────
+
+export type CourseDifficulty = 'easy' | 'medium' | 'hard';
+
+export interface CourseTarget {
+  targetNumber: number;
+  targetType: string; // e.g. "Deer", "Bear", "Turkey"
+  yardage?: number;
+  difficulty?: CourseDifficulty;
+}
+
+export interface Course {
+  id: string;
+  name: string;
+  location?: string;
+  format: ScoringFormat;
+  targets: CourseTarget[];
+  createdAt: number;
 }
 
 // ─── Shot Analyzer Types ──────────────────────────────────────────────────────
