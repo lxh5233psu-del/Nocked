@@ -1,0 +1,91 @@
+# architecture.md
+# Nocked — App Architecture
+
+## What This App Is
+Nocked is a compound archery tuning, coaching, and scoring platform. It guides archers from bare bow setup through full tuning, form coaching, shot analysis, and 3D/indoor/outdoor scoring. MVP is compound only, iOS primary.
+
+---
+
+## Module List
+
+| Module | Status | Description |
+|---|---|---|
+| Onboarding | MVP | Archer profile, bow/arrow/release profile, tool inventory |
+| Home Screen | MVP | Session launcher, bow switcher, module nav, tuning status |
+| Setup Phase | MVP | 12-step bare bow to shoot-ready guide |
+| Form Module | MVP | 8 form components with SVG animations |
+| Standard Tuning | MVP | 6 methods: sight-in, peep final, paper, walk-back, bare shaft, broadhead |
+| Advanced Tuning | MVP | 4 methods: group, torque, third axis fine, draw length fine |
+| Diagnostics | MVP | Cam timing, string replacement, peep rotation, rest issues |
+| Scoring Module | MVP | All formats, course builder, arrow plot, KWM, custom scoring |
+| Performance Overview | MVP | Avg per target trends, course-specific target trends, heat map |
+| Shot Analyzer | MVP | Phase 1 manual guided review — 6 form components |
+| Settings | MVP | Tool inventory, form reminders, units, handedness, bow profiles |
+| Social / Leaderboards | Phase 2 | Requires Supabase backend and user accounts |
+| Shot Analyzer AI | Phase 2 | MediaPipe pose detection — post MVP |
+| Coaching Marketplace | Phase 3 | Coach review of shot videos |
+
+---
+
+## Navigation Structure
+
+```
+Root
+├── Onboarding (first launch only)
+└── Main App (tab navigation)
+    ├── Home
+    ├── Setup
+    │   └── Steps 1-12 (stack)
+    ├── Form
+    │   └── Components 1-8 (stack)
+    ├── Tune
+    │   ├── Session Selector
+    │   ├── Standard Tuning (stack per method)
+    │   └── Advanced Tuning (stack per method)
+    ├── Score
+    │   ├── Scoring Home
+    │   ├── Session Setup (stack)
+    │   ├── Active Session (stack)
+    │   ├── Session Summary
+    │   ├── Course Builder (stack)
+    │   └── Performance Overview (stack)
+    ├── Shot Analyzer
+    │   ├── Upload / Record
+    │   ├── Phase Detection
+    │   ├── Guided Review (stack per component)
+    │   ├── Results
+    │   └── History
+    └── Settings
+```
+
+---
+
+## Phase Boundaries
+
+**MVP (build now):**
+- Everything in the Module List marked MVP
+- Local SQLite only — no backend
+- No user accounts required
+- No social features
+- No AI detection in Shot Analyzer
+
+**Phase 2 (post-launch, post-traction):**
+- Supabase backend
+- User accounts (required for social features only)
+- Social scoring features
+- Shot Analyzer AI (MediaPipe)
+- RevenueCat payments
+
+**Phase 3:**
+- Coaching marketplace
+- Brand partnerships / affiliate links
+
+---
+
+## Key Constraints
+- Handedness (RH/LH) from profile flips all left/right instructions throughout app
+- Release type from profile drives anchor and release instructions
+- Rest type from profile drives which setup/tuning steps are shown
+- Bow make/model from profile drives all database lookups — never ask user to look up what app already knows
+- If bow/sight/rest not in database — show generic instructions + prompt to consult owner's manual
+- All units respect Imperial/Metric setting from profile
