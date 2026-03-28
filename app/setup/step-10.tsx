@@ -206,6 +206,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   bold: {
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: 'Exo2_400Regular',
   },
 });

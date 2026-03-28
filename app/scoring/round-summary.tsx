@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
   },
   scorecardCellTarget: { width: 32, color: Colors.greyLight },
   scorecardCellZone: { flex: 1 },
-  scorecardCellScore: { width: 40, textAlign: 'center', fontFamily: 'Montserrat_300Light' },
+  scorecardCellScore: { width: 40, textAlign: 'center', fontFamily: 'Exo2_300Light' },
   scorecardCellRunning: { width: 50, textAlign: 'right', color: Colors.greyMid },
   scorecardMiss: { color: Colors.statusError },
   scorecardTop: { color: Colors.statusComplete },

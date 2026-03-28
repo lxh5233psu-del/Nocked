@@ -25,10 +25,13 @@
 
 ## Design System
 
-- Palette: clay/cream only — `Colors.bgPrimary`, `clayLight`, `clayMid`, `clayDark`, `clayDarkest`, `cream`, `border`
-- No green, red, or blue in UI
-- Fonts: Cormorant Garamond (display) + Raleway + Montserrat (body)
-- Flat design, no shadows
+- **Palette**: Dark mode — near-black base `#0F0F0F` → `bgSecondary #181818` → `bgElevated #232323`
+- **Accent**: Warm amber/gold `#C4975A` (`Colors.accent`)
+- **Text**: Warm white `#F0EDE8` (primary), mid grey `#909090` (secondary), dim grey `#5E5E5E` (labels)
+- **Borders**: `#2A2A2A` subtle, `#333333` lighter
+- **Font**: Exo 2 only — `Exo2_300Light` (body/display), `Exo2_400Regular` (body medium/labels), `Exo2_600SemiBold` (bold/headings)
+- `react-native-reanimated` is NOT used — use built-in `Animated` API only
+- `StatusBar style="light"` (dark backgrounds)
 
 ## Pushing to Expo Go (Workflow)
 

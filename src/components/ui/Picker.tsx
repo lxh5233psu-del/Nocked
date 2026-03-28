@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     minHeight: 52,
   },
   triggerText: {
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: 'Exo2_400Regular',
     fontSize: FontSizes.base,
     color: Colors.textPrimary,
     flex: 1,
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(46, 39, 32, 0.4)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     justifyContent: 'flex-end',
   },
   sheet: {
@@ -176,12 +176,12 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.borderLight,
   },
   optionText: {
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: 'Exo2_400Regular',
     fontSize: FontSizes.base,
     color: Colors.textPrimary,
   },
   optionTextSelected: {
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: 'Exo2_400Regular',
     color: Colors.clayDark,
   },
   cancelButton: {

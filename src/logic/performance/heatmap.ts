@@ -8,30 +8,29 @@ export interface HeatMapCell {
   avgScore: number;
   sessionCount: number;
   color: string;
-  /** Hex color for the score number text — light on dark cells, dark on light cells. */
+  /** Hex color for the score number text — light on dark cells, dark on bright cells. */
   textColor: string;
 }
 
 /**
  * Returns a heat map background color based on score as a percentage of max.
- * Uses clay tones per the design system — never green/red.
+ * Uses warm amber tiers against the dark theme base.
  */
 export function heatMapColor(score: number, maxScore: number): string {
-  if (maxScore === 0 || score === 0) return Colors.bgPrimary;
+  if (maxScore === 0 || score === 0) return Colors.bgSecondary;
   const pct = score / maxScore;
-  if (pct >= 0.9) return Colors.clayDarkest;
-  if (pct >= 0.75) return Colors.clayDark;
-  if (pct >= 0.6) return Colors.clayMid;
-  if (pct > 0) return Colors.greyLight;
-  return Colors.bgPrimary;
+  if (pct >= 0.9) return Colors.heatHigh;
+  if (pct >= 0.75) return Colors.heatMid;
+  if (pct >= 0.6) return Colors.heatLow;
+  if (pct > 0) return Colors.heatTrace;
+  return Colors.bgSecondary;
 }
 
 /** Returns appropriate text color for a given heat map cell background. */
 function heatMapTextColor(bgColor: string): string {
-  // Dark backgrounds need light text
-  if (bgColor === Colors.clayDarkest || bgColor === Colors.clayDark) {
-    return Colors.bgPrimary;
-  }
+  // Bright amber cell (heatHigh) reads better with dark text
+  if (bgColor === Colors.heatHigh) return Colors.bgPrimary;
+  // All other cells (dark backgrounds) use light text
   return Colors.textPrimary;
 }
 

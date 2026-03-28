@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     color: Colors.textPrimary,
     backgroundColor: Colors.bgPrimary,
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: 'Exo2_400Regular',
     fontSize: FontSizes.sm,
     minHeight: 80,
     textAlignVertical: 'top',

@@ -1,66 +1,77 @@
 export const Colors = {
-  // Backgrounds
-  bgPrimary: '#F4EFE4',
-  bgSecondary: '#E8E0CC',
+  // Backgrounds — elevation through increasing lightness
+  bgPrimary: '#0F0F0F',
+  bgSecondary: '#181818',
+  bgElevated: '#232323',
 
-  // Clay tones
-  clayDarkest: '#2E2720',
-  clayDark: '#4A3D32',
-  clayMid: '#6B5744',
-  clayLight: '#8C7260',
+  // Accent — warm amber/gold
+  accent: '#C4975A',
+
+  // Text
+  textPrimary: '#F0EDE8',
+  textSecondary: '#909090',
+  textDim: '#5E5E5E',
+
+  // Borders
+  border: '#2A2A2A',
+  borderLight: '#333333',
+
+  // Status
+  statusComplete: '#5A8A5A',
+  statusWarning: '#C4975A',
+  statusError: '#8A4A4A',
 
   // Greys
   greyDark: '#3A3A3A',
   greyMid: '#5C5C5C',
   greyLight: '#8A8A8A',
 
-  // Text
-  textPrimary: '#2E2720',
-  textSecondary: '#6B5744',
-
-  // Accent
-  accent: '#3A3A3A',
-
   // Utility
-  border: '#D4C9B0',
-  borderLight: '#E0D8C4',
   white: '#FFFFFF',
 
-  // Status (earth tones only — no green)
-  statusComplete: '#4A3D32',
-  statusWarning: '#8C7260',
-  statusError: '#6B3A2A',
+  // Clay aliases — remapped to warm amber equivalents for dark mode
+  // Older screens use these names; values updated to preserve visual hierarchy
+  clayDarkest: '#C4975A',
+  clayDark: '#A07840',
+  clayMid: '#7A5C30',
+  clayLight: '#5A4428',
+
+  // Heatmap tier colors (amber warm gradient on dark bg)
+  heatHigh: '#C4975A',
+  heatMid: '#7A5C35',
+  heatLow: '#3D2E18',
+  heatTrace: '#252018',
 } as const;
 
 export const Typography = {
-  // Cormorant Garamond — display / wordmark
+  // Exo 2 — display / large headings
   display: {
-    fontFamily: 'CormorantGaramond_500Medium',
+    fontFamily: 'Exo2_300Light',
     letterSpacing: 0.5,
   },
   displayBold: {
-    fontFamily: 'CormorantGaramond_600SemiBold',
+    fontFamily: 'Exo2_600SemiBold',
     letterSpacing: 0.5,
   },
 
-  // Raleway — body
+  // Exo 2 — body text
   body: {
-    fontFamily: 'Raleway_300Light',
+    fontFamily: 'Exo2_300Light',
     letterSpacing: 0.2,
   },
   bodyMedium: {
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: 'Exo2_400Regular',
     letterSpacing: 0.2,
   },
 
-  // Montserrat — UI labels
+  // Exo 2 — UI labels
   label: {
-    fontFamily: 'Montserrat_200ExtraLight',
+    fontFamily: 'Exo2_300Light',
     letterSpacing: 1.5,
     textTransform: 'uppercase' as const,
   },
   labelMedium: {
-    fontFamily: 'Montserrat_300Light',
+    fontFamily: 'Exo2_400Regular',
     letterSpacing: 1.2,
     textTransform: 'uppercase' as const,
   },

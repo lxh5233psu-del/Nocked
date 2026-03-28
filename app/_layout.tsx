@@ -4,17 +4,10 @@ import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
-  CormorantGaramond_500Medium,
-  CormorantGaramond_600SemiBold,
-} from '@expo-google-fonts/cormorant-garamond';
-import {
-  Raleway_300Light,
-  Raleway_400Regular,
-} from '@expo-google-fonts/raleway';
-import {
-  Montserrat_200ExtraLight,
-  Montserrat_300Light,
-} from '@expo-google-fonts/montserrat';
+  Exo2_300Light,
+  Exo2_400Regular,
+  Exo2_600SemiBold,
+} from '@expo-google-fonts/exo-2';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Colors } from '@/constants/theme';
 
@@ -22,12 +15,9 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
-    CormorantGaramond_500Medium,
-    CormorantGaramond_600SemiBold,
-    Raleway_300Light,
-    Raleway_400Regular,
-    Montserrat_200ExtraLight,
-    Montserrat_300Light,
+    Exo2_300Light,
+    Exo2_400Regular,
+    Exo2_600SemiBold,
   });
 
   useEffect(() => {
@@ -42,7 +32,7 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: Colors.bgPrimary }}>
-      <StatusBar style="dark" backgroundColor={Colors.bgPrimary} />
+      <StatusBar style="light" backgroundColor={Colors.bgPrimary} />
       <Stack screenOptions={{ headerShown: false, animation: 'fade' }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="onboarding" />

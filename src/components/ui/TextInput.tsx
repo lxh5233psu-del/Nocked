@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     color: Colors.textPrimary,
     backgroundColor: Colors.bgPrimary,
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: 'Exo2_400Regular',
     fontSize: FontSizes.base,
     minHeight: 52,
   },
