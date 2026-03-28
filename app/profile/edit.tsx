@@ -28,7 +28,7 @@ const DISCIPLINES: Discipline[] = ['Target/3D', 'Bowhunting', 'Both'];
 const RELEASE_TYPES: ReleaseType[] = ['Wrist strap', 'Thumb button', 'Hinge', 'Back tension', 'Other'];
 const BOW_TYPES: PreferredBowType[] = ['Compound', 'Recurve', 'Traditional', 'Crossbow'];
 
-export default function ProfileSettingsScreen() {
+export default function EditProfileScreen() {
   const archerProfile = useAppStore((s) => s.archerProfile);
   const discipline = useAppStore((s) => s.discipline);
   const releaseProfile = useAppStore((s) => s.releaseProfile);
@@ -48,9 +48,7 @@ export default function ProfileSettingsScreen() {
     archerProfile?.preferredBowType ?? null
   );
   const [isPublic, setIsPublic] = useState(archerProfile?.isPublic ?? true);
-  const [selectedDiscipline, setSelectedDiscipline] = useState<Discipline | null>(
-    discipline
-  );
+  const [selectedDiscipline, setSelectedDiscipline] = useState<Discipline | null>(discipline);
   const [releaseType, setReleaseType] = useState<ReleaseType | null>(
     releaseProfile?.type ?? null
   );
@@ -86,7 +84,7 @@ export default function ProfileSettingsScreen() {
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton} hitSlop={12}>
           <ChevronLeft size={22} color={Colors.clayMid} strokeWidth={1.5} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Archer Profile</Text>
+        <Text style={styles.headerTitle}>Edit Profile</Text>
         <View style={{ width: 34 }} />
       </View>
 
@@ -96,7 +94,7 @@ export default function ProfileSettingsScreen() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        {/* Visibility */}
+        {/* Public profile section */}
         <Text style={styles.sectionLabel}>Visibility</Text>
         <View style={styles.group}>
           <View style={styles.switchRow}>
@@ -109,7 +107,10 @@ export default function ProfileSettingsScreen() {
             <Switch
               value={isPublic}
               onValueChange={setIsPublic}
-              trackColor={{ false: Colors.border, true: Colors.clayDark }}
+              trackColor={{
+                false: Colors.bgSecondary,
+                true: Colors.clayDark,
+              }}
               thumbColor={Colors.bgPrimary}
             />
           </View>
@@ -119,7 +120,7 @@ export default function ProfileSettingsScreen() {
         <Text style={styles.sectionLabel}>Identity</Text>
         <View style={styles.group}>
           <TextInput
-            label="Name"
+            label="Display Name"
             value={name}
             onChangeText={setName}
             placeholder="Your name"
@@ -130,7 +131,7 @@ export default function ProfileSettingsScreen() {
             label="Bio"
             value={bio}
             onChangeText={setBio}
-            placeholder="A short intro…"
+            placeholder="A short intro — bow style, goals, favorite range…"
             optional
             multiline
             numberOfLines={3}
@@ -241,7 +242,7 @@ export default function ProfileSettingsScreen() {
       </ScrollView>
 
       <View style={styles.bottomBar}>
-        <Button label="Save Changes" onPress={handleSave} disabled={!canSave} />
+        <Button label="Save Profile" onPress={handleSave} disabled={!canSave} />
       </View>
     </SafeAreaView>
   );
@@ -286,14 +287,6 @@ const styles = StyleSheet.create({
   halfField: { flex: 1 },
   colOptions: { gap: Spacing.sm },
 
-  bottomBar: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    borderTopWidth: 1,
-    borderTopColor: Colors.borderLight,
-    backgroundColor: Colors.bgPrimary,
-  },
-
   switchRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -314,5 +307,13 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.xs,
     color: Colors.greyMid,
     lineHeight: 16,
+  },
+
+  bottomBar: {
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: Colors.borderLight,
+    backgroundColor: Colors.bgPrimary,
   },
 });

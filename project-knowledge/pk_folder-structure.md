@@ -4,6 +4,11 @@
 ```
 nocked/
 ├── app/                          # Expo Router pages (file-based routing)
+│   ├── profile/                  # Phase 2 — user profiles
+│   │   ├── [id].tsx              # Public profile page (pass id='me' for own profile)
+│   │   └── edit.tsx              # Edit own profile (bio, bow type, privacy)
+│   ├── feed/                     # Phase 2 — activity feed
+│   │   └── index.tsx             # Paginated feed of sessions from followed archers
 │   ├── (onboarding)/             # Onboarding flow — shown on first launch only
 │   │   ├── welcome.tsx
 │   │   ├── archer-profile.tsx
@@ -57,13 +62,21 @@ nocked/
 │   │   ├── form/                 # SVG form animation components
 │   │   ├── scoring/              # Score entry, arrow plot, target faces
 │   │   ├── tuning/               # Tuning step cards, tear selectors
-│   │   └── charts/               # Performance Overview chart components
+│   │   ├── charts/               # Performance Overview chart components
+│   │   └── social/               # Phase 2 — social graph components
+│   │       ├── ProfileHeader.tsx     # Avatar, bio, follow stats, CTA
+│   │       ├── FollowButton.tsx      # Follow / unfollow toggle
+│   │       ├── SessionFeedCard.tsx   # Session card in the activity feed
+│   │       ├── LikeButton.tsx        # Like / unlike with count
+│   │       └── CommentSheet.tsx      # Bottom-sheet comment thread + input
 │   │
 │   ├── store/                    # Zustand state stores
-│   │   ├── profileStore.ts       # Archer + bow + arrow + release profiles
-│   │   ├── sessionStore.ts       # Active scoring session state
-│   │   ├── tuningStore.ts        # Active tuning session state
-│   │   └── settingsStore.ts      # App settings
+│   │   ├── useAppStore.ts        # Archer + bow + arrow + release + scoring (persisted)
+│   │   └── useSocialStore.ts     # Phase 2 — follows, likes, comments, feed (persisted)
+│   │
+│   ├── types/
+│   │   ├── index.ts              # Core domain types (ArcherProfile, ScoringRound, …)
+│   │   └── social.ts             # Phase 2 types (SocialFollow, SessionLike, FeedItem, …)
 │   │
 │   ├── db/                       # SQLite database layer
 │   │   ├── schema.ts             # Table definitions

@@ -21,6 +21,8 @@ import {
   Circle,
   ChevronDown,
   Check,
+  Users,
+  User,
 } from 'lucide-react-native';
 import { Card } from '@/components/ui/Card';
 import { AnimatedEntry } from '@/components/ui/AnimatedEntry';
@@ -77,6 +79,22 @@ const MODULES: ModuleConfig[] = [
   },
 ];
 
+// Social quick-access entries (Phase 2)
+const SOCIAL_ENTRIES = [
+  {
+    label: 'Feed',
+    description: 'Sessions from archers you follow',
+    icon: <Users size={20} color={Colors.clayDark} strokeWidth={1.5} />,
+    route: '/feed',
+  },
+  {
+    label: 'My Profile',
+    description: 'Public stats & bio',
+    icon: <User size={20} color={Colors.clayDark} strokeWidth={1.5} />,
+    route: '/profile/me' as const,
+  },
+];
+
 // ─── Tuning status indicator ──────────────────────────────────────────────────
 
 const STATUS_ITEMS = [
@@ -111,7 +129,23 @@ export default function HomeScreen() {
         {/* Top bar */}
         <AnimatedEntry delay={0}>
           <View style={styles.topBar}>
-            <View>
+            <TouchableOpacity
+              onPress={() =>
+                router.push({
+                  pathname: '/profile/[id]',
+                  params: { id: archerProfile?.id ?? 'me' },
+                })
+              }
+              activeOpacity={0.7}
+              hitSlop={8}
+            >
+              <View style={styles.avatarCircle}>
+                <Text style={styles.avatarInitial}>
+                  {archerProfile?.name ? archerProfile.name.charAt(0).toUpperCase() : '?'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <View style={styles.titleBlock}>
               <Text style={styles.greeting}>{greeting}</Text>
               <Text style={styles.tagline}>NOCKED</Text>
             </View>
@@ -196,6 +230,25 @@ export default function HomeScreen() {
                 <View style={styles.moduleIcon}>{mod.icon}</View>
                 <Text style={styles.moduleLabel}>{mod.label}</Text>
                 <Text style={styles.moduleDescription}>{mod.description}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </AnimatedEntry>
+
+        {/* Social section */}
+        <AnimatedEntry delay={180}>
+          <Text style={styles.sectionLabel}>Community</Text>
+          <View style={styles.socialRow}>
+            {SOCIAL_ENTRIES.map((entry) => (
+              <TouchableOpacity
+                key={entry.label}
+                onPress={() => router.push(entry.route as any)}
+                activeOpacity={0.7}
+                style={styles.socialCard}
+              >
+                <View style={styles.moduleIcon}>{entry.icon}</View>
+                <Text style={styles.moduleLabel}>{entry.label}</Text>
+                <Text style={styles.moduleDescription}>{entry.description}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -319,9 +372,28 @@ const styles = StyleSheet.create({
   topBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingTop: Spacing.lg,
     marginBottom: Spacing.lg,
+  },
+  avatarCircle: {
+    width: 38,
+    height: 38,
+    borderRadius: Radius.full,
+    backgroundColor: Colors.bgSecondary,
+    borderWidth: 1.5,
+    borderColor: Colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarInitial: {
+    ...Typography.labelMedium,
+    fontSize: FontSizes.sm,
+    color: Colors.clayDark,
+  },
+  titleBlock: {
+    flex: 1,
+    alignItems: 'center',
   },
   greeting: {
     ...Typography.body,
@@ -337,7 +409,6 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     padding: Spacing.xs,
-    marginTop: Spacing.xs,
   },
 
   // Bow switcher
@@ -425,6 +496,20 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.xs,
     color: Colors.greyLight,
     marginBottom: Spacing.md,
+  },
+
+  // Social row
+  socialRow: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+    marginBottom: Spacing.xl,
+  },
+  socialCard: {
+    flex: 1,
+    backgroundColor: Colors.bgSecondary,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+    gap: Spacing.xs,
   },
 
   // Module grid — 2+3 layout (2 top row, 3 bottom row)

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,11 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Trash2 } from 'lucide-react-native';
+import { Trash2, MessageSquare } from 'lucide-react-native';
 import { useAppStore } from '@/store/useAppStore';
+import { useSocialStore } from '@/store/useSocialStore';
+import { LikeButton } from '@/components/social/LikeButton';
+import { CommentSheet } from '@/components/social/CommentSheet';
 import { getFormatConfig } from '@/data/scoring-formats';
 import { Colors, Typography, Spacing, Radius, FontSizes } from '@/constants/theme';
 
@@ -28,10 +31,23 @@ export default function RoundSummaryScreen() {
   const scoringRounds = useAppStore((s) => s.scoringRounds);
   const deleteScoringRound = useAppStore((s) => s.deleteScoringRound);
   const bowProfiles = useAppStore((s) => s.bowProfiles);
+  const myProfile = useAppStore((s) => s.archerProfile);
+
+  const likeSession = useSocialStore((s) => s.likeSession);
+  const unlikeSession = useSocialStore((s) => s.unlikeSession);
+  const isLiked = useSocialStore((s) => s.isLiked);
+  const getLikeCount = useSocialStore((s) => s.getLikeCount);
+  const addComment = useSocialStore((s) => s.addComment);
+  const deleteComment = useSocialStore((s) => s.deleteComment);
+  const getComments = useSocialStore((s) => s.getComments);
+
+  const [commentSheetOpen, setCommentSheetOpen] = useState(false);
 
   const round = scoringRounds.find((r) => r.id === roundId);
   const formatConfig = round ? getFormatConfig(round.format) : undefined;
   const bow = round?.bowId ? bowProfiles.find((b) => b.id === round.bowId) : undefined;
+
+  const myId = myProfile?.id ?? '';
 
   const stats = useMemo(() => {
     if (!round || !formatConfig) return null;
@@ -106,6 +122,33 @@ export default function RoundSummaryScreen() {
             <Text style={styles.heroPct}>{stats.pct}%</Text>
           </View>
         </View>
+
+        {/* Social actions */}
+        {myId ? (
+          <View style={styles.socialBar}>
+            <LikeButton
+              likeCount={getLikeCount(round.id)}
+              isLiked={isLiked(myId, round.id)}
+              onPress={() =>
+                isLiked(myId, round.id)
+                  ? unlikeSession(myId, round.id)
+                  : likeSession(myId, round.id)
+              }
+            />
+            <TouchableOpacity
+              style={styles.commentChip}
+              onPress={() => setCommentSheetOpen(true)}
+              activeOpacity={0.7}
+            >
+              <MessageSquare size={14} color={Colors.greyMid} strokeWidth={1.5} />
+              <Text style={styles.commentChipText}>
+                {getComments(round.id).length > 0
+                  ? `${getComments(round.id).length} Comment${getComments(round.id).length !== 1 ? 's' : ''}`
+                  : 'Comment'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
 
         {/* Metadata */}
         <View style={styles.metaRow}>
@@ -185,6 +228,18 @@ export default function RoundSummaryScreen() {
           <Text style={styles.newRoundText}>Start Another Round</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      {/* Comment sheet */}
+      <CommentSheet
+        visible={commentSheetOpen}
+        comments={getComments(round.id)}
+        myId={myId}
+        onClose={() => setCommentSheetOpen(false)}
+        onAddComment={(text) =>
+          myProfile && addComment(myId, myProfile.name, round.id, text)
+        }
+        onDeleteComment={deleteComment}
+      />
     </SafeAreaView>
   );
 }
@@ -285,6 +340,29 @@ const styles = StyleSheet.create({
     color: Colors.clayLight,
     width: 36,
     textAlign: 'right',
+  },
+
+  socialBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    marginBottom: Spacing.lg,
+  },
+  commentChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+    paddingVertical: Spacing.xs,
+    paddingHorizontal: Spacing.sm,
+    borderRadius: Radius.full,
+    borderWidth: 1,
+    borderColor: Colors.borderLight,
+    backgroundColor: Colors.bgPrimary,
+  },
+  commentChipText: {
+    ...Typography.label,
+    fontSize: FontSizes.xs,
+    color: Colors.greyMid,
   },
 
   metaRow: {

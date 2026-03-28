@@ -6,7 +6,7 @@
 ## archer_profile
 ```sql
 CREATE TABLE archer_profile (
-  id INTEGER PRIMARY KEY,
+  id TEXT PRIMARY KEY,              -- persistent local UUID (generateId())
   name TEXT,
   handedness TEXT NOT NULL,         -- 'RH' | 'LH'
   experience TEXT NOT NULL,         -- 'beginner' | 'intermediate' | 'advanced' | 'pro'
@@ -14,9 +14,95 @@ CREATE TABLE archer_profile (
   units TEXT NOT NULL DEFAULT 'imperial', -- 'imperial' | 'metric'
   form_reminders INTEGER DEFAULT 1, -- 0 | 1
   form_reminder_frequency TEXT DEFAULT 'every_session',
+  -- Phase 2: social profile fields
+  bio TEXT,                         -- short user bio (optional)
+  preferred_bow_type TEXT,          -- 'Compound' | 'Recurve' | 'Traditional' | 'Crossbow'
+  avatar_uri TEXT,                  -- local image URI (optional)
+  is_public INTEGER NOT NULL DEFAULT 1, -- 0 | 1 — public by default
   created_at TEXT NOT NULL
 );
 ```
+
+---
+
+## Phase 2: Social Graph Tables
+
+### social_follow
+```sql
+CREATE TABLE social_follow (
+  id TEXT PRIMARY KEY,
+  follower_id TEXT NOT NULL REFERENCES archer_profile(id),   -- who is following
+  following_id TEXT NOT NULL REFERENCES archer_profile(id),  -- who is being followed
+  created_at INTEGER NOT NULL,      -- Unix timestamp ms
+  UNIQUE (follower_id, following_id)
+);
+CREATE INDEX idx_social_follow_follower ON social_follow(follower_id);
+CREATE INDEX idx_social_follow_following ON social_follow(following_id);
+```
+
+### session_like
+```sql
+CREATE TABLE session_like (
+  id TEXT PRIMARY KEY,
+  session_id TEXT NOT NULL REFERENCES scoring_session(id) ON DELETE CASCADE,
+  archer_id TEXT NOT NULL REFERENCES archer_profile(id),
+  created_at INTEGER NOT NULL,      -- Unix timestamp ms
+  UNIQUE (session_id, archer_id)
+);
+CREATE INDEX idx_session_like_session ON session_like(session_id);
+```
+
+### session_comment
+```sql
+CREATE TABLE session_comment (
+  id TEXT PRIMARY KEY,
+  session_id TEXT NOT NULL REFERENCES scoring_session(id) ON DELETE CASCADE,
+  archer_id TEXT NOT NULL REFERENCES archer_profile(id),
+  archer_name TEXT NOT NULL,        -- denormalised for display (avoids join in feed)
+  text TEXT NOT NULL,               -- max 280 chars enforced in app
+  created_at INTEGER NOT NULL       -- Unix timestamp ms
+);
+CREATE INDEX idx_session_comment_session ON session_comment(session_id);
+```
+
+> **Join path for the activity feed:**
+> ```sql
+> SELECT ss.*
+> FROM scoring_session ss
+> WHERE ss.archer_id IN (
+>   SELECT following_id FROM social_follow WHERE follower_id = :myId
+>   UNION SELECT :myId
+> )
+> AND ss.completed = 1
+> AND ss.is_shared = 1
+> ORDER BY ss.created_at DESC
+> LIMIT :pageSize OFFSET :offset;
+> ```
+> This is the query to migrate to once Supabase is live. The current local implementation
+> reproduces the same logic in `useSocialStore.buildFeedSlice()`.
+
+---
+
+### scoring_session (Phase 2 additions)
+```sql
+-- New columns added to existing scoring_session table:
+ALTER TABLE scoring_session ADD COLUMN archer_id TEXT REFERENCES archer_profile(id);
+ALTER TABLE scoring_session ADD COLUMN is_shared INTEGER NOT NULL DEFAULT 1; -- 0 | 1
+ALTER TABLE scoring_session ADD COLUMN avg_per_target REAL; -- stored at save time
+```
+
+> **CRITICAL:** `avg_per_target` = `total_score ÷ total_units`, stored once at session save.
+> Never recomputed on read. Same rule applies to the Zustand store (`addScoringRound`
+> stamps both `archerId` and `avgPerTarget`).
+
+---
+
+## Current implementation note (MVP Phase 2)
+The social tables above reflect the **target SQLite / Supabase schema**. In the current
+build, all social state (`follows`, `likes`, `comments`) is stored in Zustand persisted
+via AsyncStorage (`nocked-social-storage` key), matching the same data shape. Migration
+to Supabase in Phase 3 only requires pointing the store actions at remote calls — the
+type signatures and business logic remain unchanged.
 
 ## bow_profile
 ```sql

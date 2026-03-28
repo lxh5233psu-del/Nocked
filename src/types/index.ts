@@ -3,11 +3,20 @@
 export type Handedness = 'RH' | 'LH';
 export type ExperienceLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'Pro/Coach';
 export type Discipline = 'Target/3D' | 'Bowhunting' | 'Both';
+export type PreferredBowType = 'Compound' | 'Recurve' | 'Traditional' | 'Crossbow';
 
 export interface ArcherProfile {
+  /** Persistent local ID — ties into social graph. Generated once on profile creation. */
+  id: string;
   name: string;
   handedness: Handedness;
   experience: ExperienceLevel;
+  // ── Phase 2: social profile fields ──────────────────────────────────────────
+  bio?: string;
+  preferredBowType?: PreferredBowType;
+  avatarUri?: string;
+  /** Default true — profile and sessions are discoverable by followers. */
+  isPublic: boolean;
 }
 
 // ─── Tool Inventory ───────────────────────────────────────────────────────────
@@ -227,6 +236,13 @@ export interface ScoringRound {
   totalScore: number;
   completed: boolean;
   notes?: string;
+  // ── Phase 2: social fields ──────────────────────────────────────────────────
+  /** ID of the archer who recorded this round. Ties to ArcherProfile.id. */
+  archerId?: string;
+  /** Whether this round is visible to followers. Default true. */
+  isShared?: boolean;
+  /** Cached avg per target (totalScore ÷ totalTargets). Stored at save time. */
+  avgPerTarget?: number;
 }
 
 // ─── Shot Analyzer Types ──────────────────────────────────────────────────────

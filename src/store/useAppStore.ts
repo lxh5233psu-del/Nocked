@@ -14,6 +14,7 @@ import {
   ScoringRound,
   ShotSession,
 } from '@/types';
+import { generateId } from '@/utils/id';
 
 // ─── State Shape ──────────────────────────────────────────────────────────────
 
@@ -139,7 +140,15 @@ export const useAppStore = create<AppState & AppActions>()(
       resetOnboarding: () => set({ ...initialState }),
 
       // ── Archer profile ──────────────────────────────────────────────────────
-      setArcherProfile: (profile) => set({ archerProfile: profile }),
+      setArcherProfile: (profile) =>
+        set((state) => ({
+          archerProfile: {
+            // Preserve existing id, or assign a new one if missing
+            id: state.archerProfile?.id ?? generateId(),
+            isPublic: true,
+            ...profile,
+          },
+        })),
       setDiscipline: (discipline) => set({ discipline }),
       setToolInventory: (tools) => set({ toolInventory: tools }),
 
@@ -244,7 +253,20 @@ export const useAppStore = create<AppState & AppActions>()(
       // ── Scoring ────────────────────────────────────────────────────────────
       addScoringRound: (round) =>
         set((state) => ({
-          scoringRounds: [round, ...state.scoringRounds],
+          scoringRounds: [
+            {
+              ...round,
+              // Stamp archerId and avgPerTarget at save time
+              archerId: round.archerId ?? state.archerProfile?.id,
+              isShared: round.isShared ?? true,
+              avgPerTarget:
+                round.avgPerTarget ??
+                (round.totalTargets > 0
+                  ? round.totalScore / round.totalTargets
+                  : 0),
+            },
+            ...state.scoringRounds,
+          ],
           activeScoringRoundId: round.id,
         })),
 
