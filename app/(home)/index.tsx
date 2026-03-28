@@ -11,11 +11,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import {
   Settings,
-  Target,
-  Crosshair,
-  SlidersHorizontal,
-  Award,
-  Video,
   ChevronRight,
   CheckCircle,
   Circle,
@@ -26,60 +21,13 @@ import {
 } from 'lucide-react-native';
 import { Card } from '@/components/ui/Card';
 import { AnimatedEntry } from '@/components/ui/AnimatedEntry';
+import { BottomNav } from '@/components/ui/BottomNav';
 import { useAppStore } from '@/store/useAppStore';
 import { Colors, Typography, Spacing, Radius, FontSizes } from '@/constants/theme';
 import { ModuleType } from '@/types';
 
-// ─── Module config ─────────────────────────────────────────────────────────────
+// ─── Social quick-access ──────────────────────────────────────────────────────
 
-interface ModuleConfig {
-  id: ModuleType;
-  label: string;
-  description: string;
-  icon: React.ReactNode;
-  route: string;
-  phase2?: boolean;
-}
-
-const MODULES: ModuleConfig[] = [
-  {
-    id: 'Setup',
-    label: 'Setup',
-    description: '12-step bow setup',
-    icon: <SlidersHorizontal size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/setup',
-  },
-  {
-    id: 'Form',
-    label: 'Form',
-    description: '8 components',
-    icon: <Target size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/form',
-  },
-  {
-    id: 'Tune',
-    label: 'Tune',
-    description: '6 standard methods',
-    icon: <Crosshair size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/tuning',
-  },
-  {
-    id: 'Score',
-    label: 'Score',
-    description: 'ASA · IBO · NFAA',
-    icon: <Award size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/scoring',
-  },
-  {
-    id: 'Shot Analyzer',
-    label: 'Shot Analyzer',
-    description: 'Log & analyze',
-    icon: <Video size={22} color={Colors.clayDark} strokeWidth={1.5} />,
-    route: '/shot-analyzer',
-  },
-];
-
-// Social quick-access entries (Phase 2)
 const SOCIAL_ENTRIES = [
   {
     label: 'Feed',
@@ -204,8 +152,15 @@ export default function HomeScreen() {
                   style={styles.continueButton}
                   activeOpacity={0.7}
                   onPress={() => {
-                    const mod = MODULES.find((m) => m.id === lastSession.module);
-                    if (mod) router.push(mod.route as any);
+                    const ROUTE_MAP: Record<ModuleType, string> = {
+                      Setup: '/setup',
+                      Form: '/form',
+                      Tune: '/tuning',
+                      Score: '/scoring',
+                      'Shot Analyzer': '/shot-analyzer',
+                    };
+                    const route = ROUTE_MAP[lastSession.module];
+                    if (route) router.push(route as any);
                   }}
                 >
                   <Text style={styles.continueText}>Continue</Text>
@@ -215,25 +170,6 @@ export default function HomeScreen() {
             </Card>
           </AnimatedEntry>
         )}
-
-        {/* Module grid */}
-        <AnimatedEntry delay={140}>
-          <Text style={styles.sectionLabel}>Modules</Text>
-          <View style={styles.moduleGrid}>
-            {MODULES.map((mod) => (
-              <TouchableOpacity
-                key={mod.id}
-                onPress={() => router.push(mod.route as any)}
-                activeOpacity={0.7}
-                style={styles.moduleCard}
-              >
-                <View style={styles.moduleIcon}>{mod.icon}</View>
-                <Text style={styles.moduleLabel}>{mod.label}</Text>
-                <Text style={styles.moduleDescription}>{mod.description}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </AnimatedEntry>
 
         {/* Social section */}
         <AnimatedEntry delay={180}>
@@ -304,6 +240,9 @@ export default function HomeScreen() {
         )}
       </ScrollView>
 
+      {/* Bottom navigation */}
+      <BottomNav />
+
       {/* Bow switcher modal */}
       <Modal visible={bowSwitcherOpen} animationType="slide" transparent>
         <View style={styles.modalOverlay}>
@@ -365,7 +304,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: Spacing.lg,
-    paddingBottom: Spacing.xxxl,
+    paddingBottom: Spacing.xl,
   },
 
   // Top bar
@@ -510,23 +449,6 @@ const styles = StyleSheet.create({
     borderRadius: Radius.lg,
     padding: Spacing.md,
     gap: Spacing.xs,
-  },
-
-  // Module grid — 2+3 layout (2 top row, 3 bottom row)
-  moduleGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: Spacing.sm,
-    marginBottom: Spacing.xl,
-  },
-  moduleCard: {
-    width: '48%',
-    backgroundColor: Colors.bgSecondary,
-    borderRadius: Radius.lg,
-    padding: Spacing.md,
-    gap: Spacing.xs,
-    // Make bottom row items fill 3 columns
-    flexBasis: '48%',
   },
   moduleIcon: {
     marginBottom: Spacing.xs,
