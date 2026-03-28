@@ -1,12 +1,5 @@
-import React, { useEffect } from 'react';
-import { ViewStyle } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  withDelay,
-  Easing,
-} from 'react-native-reanimated';
+import React, { useEffect, useRef } from 'react';
+import { Animated, ViewStyle } from 'react-native';
 
 interface AnimatedEntryProps {
   children: React.ReactNode;
@@ -18,7 +11,7 @@ interface AnimatedEntryProps {
 
 /**
  * Wraps children in a fade + slide-up entrance animation.
- * Uses Reanimated on the native thread for 60fps performance.
+ * Uses React Native's built-in Animated API (New Architecture compatible).
  */
 export function AnimatedEntry({
   children,
@@ -27,23 +20,31 @@ export function AnimatedEntry({
   distance = 14,
   style,
 }: AnimatedEntryProps) {
-  const opacity = useSharedValue(0);
-  const translateY = useSharedValue(distance);
+  const opacity = useRef(new Animated.Value(0)).current;
+  const translateY = useRef(new Animated.Value(distance)).current;
 
   useEffect(() => {
-    const config = { duration, easing: Easing.out(Easing.quad) };
-    opacity.value = withDelay(delay, withTiming(1, config));
-    translateY.value = withDelay(delay, withTiming(0, config));
+    const anim = Animated.parallel([
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration,
+        delay,
+        useNativeDriver: true,
+      }),
+      Animated.timing(translateY, {
+        toValue: 0,
+        duration,
+        delay,
+        useNativeDriver: true,
+      }),
+    ]);
+    anim.start();
+    return () => anim.stop();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-    transform: [{ translateY: translateY.value }],
-  }));
-
   return (
-    <Animated.View style={[animatedStyle, style]}>
+    <Animated.View style={[{ opacity, transform: [{ translateY }] }, style]}>
       {children}
     </Animated.View>
   );

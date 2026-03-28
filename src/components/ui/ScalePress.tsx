@@ -1,10 +1,5 @@
-import React from 'react';
-import { Pressable, StyleProp, ViewStyle, StyleSheet } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-} from 'react-native-reanimated';
+import React, { useRef } from 'react';
+import { Animated, Pressable, StyleProp, ViewStyle } from 'react-native';
 
 interface ScalePressProps {
   children: React.ReactNode;
@@ -15,9 +10,8 @@ interface ScalePressProps {
 }
 
 /**
- * Pressable with a native-thread spring scale animation on press.
- * Drops in as a direct replacement for TouchableOpacity where
- * tactile feedback matters (scoring buttons, primary CTAs).
+ * Pressable with a spring scale animation on press.
+ * Uses React Native's built-in Animated API (New Architecture compatible).
  */
 export function ScalePress({
   children,
@@ -26,24 +20,34 @@ export function ScalePress({
   activeScale = 0.93,
   disabled = false,
 }: ScalePressProps) {
-  const scale = useSharedValue(1);
+  const scale = useRef(new Animated.Value(1)).current;
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
+  const handlePressIn = () => {
+    Animated.spring(scale, {
+      toValue: activeScale,
+      damping: 15,
+      stiffness: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scale, {
+      toValue: 1,
+      damping: 15,
+      stiffness: 300,
+      useNativeDriver: true,
+    }).start();
+  };
 
   return (
     <Pressable
       onPress={onPress}
-      onPressIn={() => {
-        scale.value = withSpring(activeScale, { damping: 15, stiffness: 300 });
-      }}
-      onPressOut={() => {
-        scale.value = withSpring(1, { damping: 15, stiffness: 300 });
-      }}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       disabled={disabled}
     >
-      <Animated.View style={[animatedStyle, style]}>
+      <Animated.View style={[{ transform: [{ scale }] }, style]}>
         {children}
       </Animated.View>
     </Pressable>
