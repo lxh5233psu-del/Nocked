@@ -16,6 +16,14 @@ import {
 } from 'lucide-react-native';
 import { Colors, Radius, Spacing } from '@/constants/theme';
 
+// ─── Sizing constants ─────────────────────────────────────────────────────────
+
+const SCORE_SIZE    = 50;   // diameter of the raised centre button
+const SCORE_RISE    = 10;   // px the button protrudes above the bar line
+const BAR_HEIGHT    = 46;   // height of the tab row itself
+const ICON_SIZE     = 20;   // side-tab icon size
+const SCORE_ICON    = 22;   // score button icon size
+
 // ─── Tab config ───────────────────────────────────────────────────────────────
 
 const LEFT_TABS = [
@@ -33,36 +41,41 @@ const RIGHT_TABS = [
 export function BottomNav() {
   return (
     <SafeAreaView edges={['bottom']} style={styles.safeArea}>
-      {/*
-        Outer wrapper has paddingTop to carve out space for the raised Score
-        button, which is positioned absolutely at the top of this wrapper.
-        overflow: visible lets the button poke above the visible bar area.
-      */}
       <View style={styles.wrapper}>
-        {/* ── Raised Score button ─────────────────────────────────────── */}
+
+        {/*
+          Inward-shadow simulation — three stacked translucent layers that
+          concentrate at the very bottom edge, mimicking a gradient vignette
+          rising from the bottom of the screen.
+          pointerEvents="none" so they never intercept touches.
+        */}
+        <View style={[styles.shadowLayer, { height: 28 }]} pointerEvents="none" />
+        <View style={[styles.shadowLayer, { height: 16 }]} pointerEvents="none" />
+        <View style={[styles.shadowLayer, { height:  8 }]} pointerEvents="none" />
+
+        {/* ── Raised Score button ──────────────────────────────────────── */}
         <TouchableOpacity
           onPress={() => router.push('/scoring')}
-          activeOpacity={0.82}
+          activeOpacity={0.80}
           style={styles.scoreButton}
         >
-          <Award size={26} color={Colors.bgPrimary} strokeWidth={1.5} />
+          <Award size={SCORE_ICON} color={Colors.bgPrimary} strokeWidth={1.5} />
         </TouchableOpacity>
 
-        {/* ── Tab row ──────────────────────────────────────────────────── */}
+        {/* ── Tab row ─────────────────────────────────────────────────── */}
         <View style={styles.bar}>
-          {/* Left pair */}
           {LEFT_TABS.map((tab) => (
             <TabItem key={tab.label} tab={tab} />
           ))}
 
-          {/* Centre gap — the Score button floats above this space */}
+          {/* Gap — the Score button hovers above this space */}
           <View style={styles.centerGap} />
 
-          {/* Right pair */}
           {RIGHT_TABS.map((tab) => (
             <TabItem key={tab.label} tab={tab} />
           ))}
         </View>
+
       </View>
     </SafeAreaView>
   );
@@ -81,46 +94,40 @@ function TabItem({ tab }: { tab: TabConfig }) {
   return (
     <TouchableOpacity
       onPress={() => router.push(tab.route as any)}
-      activeOpacity={0.65}
-      hitSlop={10}
+      activeOpacity={0.55}
+      hitSlop={12}
       style={styles.tabItem}
     >
-      <Icon size={22} color={Colors.clayMid} strokeWidth={1.5} />
+      <Icon size={ICON_SIZE} color={Colors.clayDark} strokeWidth={1.5} />
     </TouchableOpacity>
   );
 }
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 
-const SCORE_BUTTON_SIZE = 62;
-const SCORE_PROTRUDE    = 22;   // how many px the button rises above the bar top
-const BAR_HEIGHT        = 58;
-
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: Colors.bgSecondary,
+    // Match bar colour so the safe-area extension below the bar is seamless
+    backgroundColor: Colors.bgPrimary,
   },
 
   wrapper: {
     alignItems: 'center',
-    backgroundColor: Colors.bgSecondary,
-    // Top border gives a crisp edge
+    backgroundColor: Colors.bgPrimary,
+    // Hairline separator + upward shadow to lift bar off screen content
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Colors.border,
-    // Upward shadow — "lifts" the bar off the content
+    borderTopColor: Colors.clayLight,
     ...Platform.select({
       ios: {
         shadowColor: Colors.clayDarkest,
-        shadowOffset: { width: 0, height: -4 },
-        shadowOpacity: 0.12,
-        shadowRadius: 14,
+        shadowOffset: { width: 0, height: -3 },
+        shadowOpacity: 0.10,
+        shadowRadius: 10,
       },
-      android: {
-        elevation: 14,
-      },
+      android: { elevation: 10 },
     }),
-    // Extra top padding creates the space the score button floats into
-    paddingTop: SCORE_PROTRUDE,
+    // paddingTop creates the headroom the Score button rises into
+    paddingTop: SCORE_RISE,
     overflow: 'visible',
   },
 
@@ -139,39 +146,48 @@ const styles = StyleSheet.create({
     height: BAR_HEIGHT,
   },
 
-  // The gap in the centre of the tab row where Score floats above
   centerGap: {
-    width: SCORE_BUTTON_SIZE + Spacing.xl,
+    // Slightly wider than the button so the icon never clips the ring
+    width: SCORE_SIZE + Spacing.lg,
   },
 
-  // Raised circular Score button — positioned at the top of the wrapper,
-  // centred horizontally, so it protrudes SCORE_PROTRUDE px above the bar line.
+  // Score button: sits at the very top of the wrapper, centred, and rises
+  // SCORE_RISE px above the bar's top edge.
   scoreButton: {
     position: 'absolute',
-    top: -(SCORE_BUTTON_SIZE / 2 - SCORE_PROTRUDE),
+    top: -(SCORE_SIZE / 2 - SCORE_RISE),
     alignSelf: 'center',
-    width: SCORE_BUTTON_SIZE,
-    height: SCORE_BUTTON_SIZE,
-    borderRadius: SCORE_BUTTON_SIZE / 2,
+    width: SCORE_SIZE,
+    height: SCORE_SIZE,
+    borderRadius: SCORE_SIZE / 2,
     backgroundColor: Colors.clayDarkest,
     alignItems: 'center',
     justifyContent: 'center',
-    // Downward shadow gives the raised-button depth
+    zIndex: 10,
+    // Subtle ring border so the button reads against any scroll content
+    borderWidth: 2.5,
+    borderColor: Colors.bgPrimary,
+    // Drop shadow beneath the button
     ...Platform.select({
       ios: {
         shadowColor: Colors.clayDarkest,
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.45,
-        shadowRadius: 12,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.35,
+        shadowRadius: 8,
       },
-      android: {
-        elevation: 12,
-      },
+      android: { elevation: 8 },
     }),
-    // Keep it above the bar on z-axis
-    zIndex: 10,
-    // Ring detail — subtle border for separation from background
-    borderWidth: 3,
-    borderColor: Colors.bgPrimary,
+  },
+
+  // Each layer covers the full bar width and anchors to the bottom.
+  // Stacking three layers concentrates opacity at the very bottom edge,
+  // producing the inward-shadow-from-below gradient effect.
+  shadowLayer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: Colors.clayDarkest,
+    opacity: 0.055,
   },
 });
