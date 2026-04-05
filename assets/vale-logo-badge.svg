@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 380">
+  <!--
+    VALE Archery App Logo — BADGE / PATCH version
+    Shield-shaped badge — ideal for leather patches, woven patches, embroidered emblems
+    Black and white
+  -->
+
+  <!-- ============================================================ -->
+  <!-- SHIELD BADGE OUTLINE                                          -->
+  <!-- Classic shield / crest shape                                  -->
+  <!-- ============================================================ -->
+  <!-- Outer shield -->
+  <path d="
+    M 20 40
+    Q 20 20, 40 20
+    L 300 20
+    Q 320 20, 320 40
+    L 320 220
+    Q 320 280, 280 310
+    L 170 365
+    L 160 370
+    L 150 368
+    L 140 370
+    L 130 365
+    L 20 310
+    Q 20 280, 20 220
+    Z
+  " fill="#000" stroke="none"/>
+
+  <!-- Inner shield (white inset — creates border effect) -->
+  <path d="
+    M 30 46
+    Q 30 28, 47 28
+    L 293 28
+    Q 310 28, 310 46
+    L 310 218
+    Q 310 272, 274 300
+    L 163 352
+    L 150 358
+    L 137 352
+    L 66 300
+    Q 30 272, 30 218
+    Z
+  " fill="#fff"/>
+
+  <!-- ============================================================ -->
+  <!-- LOGO MARK — centered within shield, scaled to fit            -->
+  <!-- Scale factor ~0.78 applied, centered at (170, 175)           -->
+  <!-- Original center was (150, 200); offset +20x, -25y            -->
+  <!-- ============================================================ -->
+
+  <!-- LEFT TURKEY FEATHER FLETCHING -->
+  <path d="
+    M 163 174
+    C 139 150, 85 74, 52 25
+    C 45 16, 40 18, 40 27
+    C 40 73, 65 143, 163 174
+    Z
+  " fill="#000"/>
+  <!-- Left feather rachis -->
+  <path d="M 162 172 C 124 135, 86 83, 46 26"
+        fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+  <!-- Left barb lines -->
+  <path d="M 153 154 C 136 140, 112 118, 86 92"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 142 140 C 124 126, 99 103, 72 76"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 129 124 C 111 109, 86 86, 60 59"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- RIGHT TURKEY FEATHER FLETCHING (mirror) -->
+  <path d="
+    M 167 174
+    C 191 150, 245 74, 278 25
+    C 285 16, 290 18, 290 27
+    C 290 73, 265 143, 167 174
+    Z
+  " fill="#000"/>
+  <!-- Right feather rachis -->
+  <path d="M 168 172 C 206 135, 244 83, 284 26"
+        fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+  <!-- Right barb lines -->
+  <path d="M 177 154 C 194 140, 218 118, 244 92"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 188 140 C 206 126, 231 103, 258 76"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 201 124 C 219 109, 244 86, 270 59"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- CENTER COCK FEATHER -->
+  <path d="
+    M 161 170
+    C 155 156, 153 136, 155 114
+    C 157 101, 161 92, 165 86
+    C 169 92, 173 101, 175 114
+    C 177 136, 175 156, 169 170
+    Z
+  " fill="#000"/>
+  <!-- Center spine -->
+  <path d="M 165 170 L 165 88"
+        fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- ARROW SHAFT -->
+  <rect x="161" y="168" width="10" height="148" rx="2" fill="#000"/>
+
+  <!-- NOCK -->
+  <rect x="159" y="163" width="14" height="9" rx="3.5" fill="#000"/>
+  <rect x="163" y="163" width="4" height="5" rx="1" fill="#fff"/>
+
+  <!-- BROADHEAD -->
+  <rect x="161" y="312" width="10" height="14" fill="#000"/>
+  <path d="
+    M 166 332
+    L 143 305
+    L 156 301
+    L 160 284
+    L 171 284
+    L 175 301
+    L 188 305
+    Z
+  " fill="#000"/>
+  <path d="M 143 305 L 166 332" fill="none" stroke="#fff" stroke-width="1" opacity="0.4"/>
+  <path d="M 188 305 L 166 332" fill="none" stroke="#fff" stroke-width="1" opacity="0.4"/>
+
+  <!-- ============================================================ -->
+  <!-- VALE WORDMARK — at bottom of shield                          -->
+  <!-- ============================================================ -->
+  <text
+    x="165"
+    y="355"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="22"
+    font-weight="bold"
+    letter-spacing="12"
+    fill="#fff"
+  >VALE</text>
+
+</svg>

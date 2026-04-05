@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420">
+  <!--
+    VALE Archery App Logo
+    Concept: Downward-pointing arrow with turkey feather fletchings forming the letter "V"
+    Black and white — leather stamp, silk screen, and shirt print ready
+  -->
+
+  <!-- ============================================================ -->
+  <!-- LEFT TURKEY FEATHER FLETCHING                                 -->
+  <!-- Large asymmetric feather — outer vane wider than inner vane  -->
+  <!-- ============================================================ -->
+  <path d="
+    M 148 192
+    C 120 165, 60 82, 24 28
+    C 17 19, 11 20, 11 31
+    C 11 82, 40 160, 148 192
+    Z
+  " fill="#000"/>
+
+  <!-- Left feather rachis (quill/spine) — white line detail -->
+  <path d="M 147 190 C 106 150, 64 93, 18 29"
+        fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+
+  <!-- Left feather barb texture lines (subtle, upper portion of feather) -->
+  <path d="M 138 170 C 118 155, 90 130, 60 100"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.55"/>
+  <path d="M 126 155 C 105 140, 76 112, 46 80"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.55"/>
+  <path d="M 112 138 C 90 122, 62 98, 33 65"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT TURKEY FEATHER FLETCHING (mirror of left)              -->
+  <!-- ============================================================ -->
+  <path d="
+    M 152 192
+    C 180 165, 240 82, 276 28
+    C 283 19, 289 20, 289 31
+    C 289 82, 260 160, 152 192
+    Z
+  " fill="#000"/>
+
+  <!-- Right feather rachis -->
+  <path d="M 153 190 C 194 150, 236 93, 282 29"
+        fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+
+  <!-- Right feather barb texture lines -->
+  <path d="M 162 170 C 182 155, 210 130, 240 100"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.55"/>
+  <path d="M 174 155 C 195 140, 224 112, 254 80"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.55"/>
+  <path d="M 188 138 C 210 122, 238 98, 267 65"
+        fill="none" stroke="#fff" stroke-width="0.9" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- ============================================================ -->
+  <!-- CENTER COCK FEATHER (index feather, pointing straight up)    -->
+  <!-- Narrower — perpendicular to bow limb in traditional setup    -->
+  <!-- ============================================================ -->
+  <path d="
+    M 144 188
+    C 138 172, 135 150, 138 127
+    C 140 113, 145 104, 150 98
+    C 155 104, 160 113, 162 127
+    C 165 150, 162 172, 156 188
+    Z
+  " fill="#000"/>
+
+  <!-- Center feather spine -->
+  <path d="M 150 188 L 150 100"
+        fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- ============================================================ -->
+  <!-- ARROW SHAFT                                                   -->
+  <!-- ============================================================ -->
+  <rect x="145" y="185" width="10" height="168" rx="2" fill="#000"/>
+
+  <!-- ============================================================ -->
+  <!-- NOCK FITTING (end cap where bowstring seats)                 -->
+  <!-- ============================================================ -->
+  <!-- Nock collar — slightly wider than shaft -->
+  <rect x="143" y="180" width="14" height="9" rx="3.5" fill="#000"/>
+  <!-- String groove — small white slot at the very top -->
+  <rect x="148" y="180" width="4" height="5" rx="1" fill="#fff"/>
+
+  <!-- ============================================================ -->
+  <!-- BROADHEAD ARROWHEAD — 2-blade fixed broadhead                -->
+  <!-- Classic hunting profile with swept-back blades               -->
+  <!-- ============================================================ -->
+  <!-- Ferrule body (connects to shaft) -->
+  <rect x="145" y="350" width="10" height="16" fill="#000"/>
+
+  <!-- Main blade geometry -->
+  <path d="
+    M 150 374
+    L 124 344
+    L 139 340
+    L 144 320
+    L 156 320
+    L 161 340
+    L 176 344
+    Z
+  " fill="#000"/>
+
+  <!-- Blade edge highlight (thin white line on each blade edge) -->
+  <path d="M 124 344 L 150 374" fill="none" stroke="#fff" stroke-width="1" opacity="0.4"/>
+  <path d="M 176 344 L 150 374" fill="none" stroke="#fff" stroke-width="1" opacity="0.4"/>
+
+  <!-- ============================================================ -->
+  <!-- VALE WORDMARK                                                 -->
+  <!-- Strong serif, widely tracked — reads like a maker's mark     -->
+  <!-- ============================================================ -->
+  <!-- Thin rule above text -->
+  <line x1="65" y1="387" x2="235" y2="387" stroke="#000" stroke-width="1.5"/>
+
+  <text
+    x="150"
+    y="409"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="26"
+    font-weight="bold"
+    letter-spacing="14"
+    fill="#000"
+  >VALE</text>
+
+  <!-- Thin rule below text -->
+  <line x1="65" y1="415" x2="235" y2="415" stroke="#000" stroke-width="1.5"/>
+
+</svg>
